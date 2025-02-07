@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header</title>
+  
+  <link rel="stylesheet" href="header.css">
+   <!-- Add Font Awesome for icons -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <h1 class="home-button" onclick="goHome()">Home</h1>
+
+    <button class="leaderboard-button" onclick="viewLeaderboard()" title="Leaderboard">
+      <i class="fas fa-trophy"></i> <!-- Font Awesome Trophy Icon -->
+    </button>
+  </div>
+
+  <!-- Side Menu -->
+  <div class="side-menu" id="sideMenu">
+    <button class="menu-item" onclick="stats()">Stats</button>
+    <button class="menu-item"  onclick="editProfile()">Edit Profile</button>
+    <button class="menu-item" type="button" id="submitQuestion" onclick="submitQuestion()">Submit Question</button>
+    <button class="menu-item" onclick="logout()">Logout</button>
+    <button class="menu-item delete"  onclick="deleteProfile()">Delete Profile</button>
+  </div>
+  <script src="/mathGoesRetro_frontend/AllUsers/header.js"></script>
+</body>
+</html>

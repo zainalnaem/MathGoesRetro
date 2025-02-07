@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: 'Press Start 2P';
+    background-color: #191919;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #191919;
+    border: 3px solid #ff007a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ff007a;
+    padding: 15px;
+    width: 85%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Header */
+  h1 {
+    font-size: 1.5rem;
+    color: #00d9ff;
+    text-shadow: 2px 2px 0 #ff007a, -2px -2px 0 #00d9ff;
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-size: 1rem;
+    color: #f5f5f5;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  textarea, input, select {
+    width: 100%;
+    margin: 5px 0 10px;
+    padding: 8px;
+    border: 2px solid #ff007a;
+    border-radius: 5px;
+    background-color: #191919;
+    color: #f5f5f5;
+    font-size: 12px;
+    text-shadow: 0 0 5px #00d9ff;
+  }
+  
+  textarea::placeholder,
+  input::placeholder {
+    color: #aaa;
+    font-size: 12px;
+  }
+  
+  /* Buttons */
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-family: 'Press Start 2P';
+    border: 3px solid #ff007a;
+    border-radius: 10px;
+    background: #191919;
+    color: #00d9ff;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00d9ff, 0 0 10px #ff007a;
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  

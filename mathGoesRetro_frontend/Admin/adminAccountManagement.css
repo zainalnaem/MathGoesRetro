@@ -1,0 +1,76 @@
+/* General body styling */
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Press Start 2P', cursive; /* Retro font */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1c1c1c; /* Dark background */
+}
+
+/* Main container */
+.container{
+    text-align: center;
+    background: #111; /* Dark container */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Glowing neon effect */
+    width: 320px; /* Mobile-friendly width */
+    height: 480px;
+}
+
+/* Logo styling */
+.logo{
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+    border: 3px solid #00ffcc;
+    padding: 5px;
+    background-color: #111;
+    box-shadow: 0 0 10px 2px #ff00ff;
+}
+
+/* Page title */
+.pageTitle{
+    font-size: 20px;
+    color: #00ffcc;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+/* Submit button */
+.adminButton{
+    margin-top: 8%;
+    padding: 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #9e21a4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.adminButton:hover{
+    background-color: #00ffcc;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+}
+
+#adminLogoutButton{
+    margin-top: 20%;
+    padding: 5px;
+    font-size: 12px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#adminLogoutButton:hover{
+    background-color: #00ffcc;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stats.css">
+  <link rel="stylesheet" href="../AllUsers/header.css"> <!-- Link the header CSS -->
+</head>
+<body>
+    <!-- Include Header -->
+    <div id="header"></div>
+    <div class="container">
+    <div class="header">
+      <h1>User Stats</h1>
+    </div>
+    <div class="tab-container">
+        <button class="tab-btn active" data-tab="game1" data-game="1">Math Mamba</button>
+        <button class="tab-btn" data-tab="game2" data-game="2">Number Kruncher</button>
+        <button class="tab-btn" data-tab="game3" data-game="3">Traffic Math</button>
+    </div>
+    <div class="tab-content active" id="game1">
+      <h2>Math Mamba</h2>
+      <p class="total-score">Total Score: <span id="totalScore1">2500</span> </p>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Score</th>
+            <th>Correct Answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1000</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>1500</td>
+            <td>8</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-content" id="game2">
+      <h2>Number Kruncher</h2>
+      <p class="total-score">Total Score: <span id="totalScore2">3000</span></p>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Score</th>
+            <th>Correct Answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1200</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>900</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>900</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-content" id="game3">
+      <h2>Traffic Math</h2>
+      <p class="total-score">Total Score: <span id="totalScore3">1700</span></p>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Score</th>
+            <th>Correct Answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>800</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>900</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="../AllUsers/header.js"></script> <!-- Include header JS -->
+  <script>
+    // Load Header
+    fetch('../AllUsers/header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+
+  
+
+  <script src="stats.js"></script>
+</body>
+</html>

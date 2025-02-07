@@ -1,0 +1,78 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Question</title>
+    <link rel="stylesheet" href="submitQuestion.css">
+    <link rel="stylesheet" href="header.css">
+  </head>
+  <body>
+      <!-- Include Header -->
+    <div id="header"></div>
+    <div class="container">
+      <h1>Submit Your Question</h1>
+      <form id="questionForm">
+        <!-- Question Field -->
+        <label for="question">Question:</label>
+        <textarea id="question" name="question" rows="3" placeholder="Type your question here..." required></textarea>
+
+        <!-- Correct Answer Field -->
+        <label for="correctAnswer">Correct Answer:</label>
+        <input type="text" id="correctAnswer" name="correctAnswer" placeholder="Type the correct answer here..." required>
+
+        <!-- Wrong Answers -->
+        <label for="wrongAnswer1">Wrong Answer 1:</label>
+        <input type="text" id="wrongAnswer1" name="wrongAnswer1" placeholder="Type the first wrong answer here..." required>
+
+        <label for="wrongAnswer2">Wrong Answer 2:</label>
+        <input type="text" id="wrongAnswer2" name="wrongAnswer2" placeholder="Type the second wrong answer here..." required>
+
+        <label for="wrongAnswer3">Wrong Answer 3:</label>
+        <input type="text" id="wrongAnswer3" name="wrongAnswer3" placeholder="Type the third wrong answer here..." required>
+
+        <!-- Topic Dropdown -->
+        <label for="topic">Question Topic:</label>
+        <select id="topic" name="topic" required>
+          <option value="complex">Complex</option>
+          <option value="derivative">Derivative</option>
+          <option value="radiant">Radiant</option>
+        </select>
+
+        <!-- Difficulty Dropdown -->
+        <label for="difficulty">Difficulty Level:</label>
+        <select id="difficulty" name="difficulty" required>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <button type="submit" id="submitBtn">Submit</button>
+          <button type="button" id="cancelBtn" onclick="cancelForm()">Cancel</button>
+          <button type="button" id="viewQuestionsBtn" onclick="fetchUserQuestions()">View My Questions</button>
+        </div>
+
+
+        <!-- Section to Display Questions -->
+        <div id="questionsDisplay" class="questions-display" style="display: none;">
+          <h2>My Submitted Questions</h2>
+          <ul id="questionsList"></ul>
+        </div>
+      </form>
+    </div>
+
+    <script src="header.js"></script> <!-- Include header JS -->
+    <script>
+      // Load Header
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading header:', error));
+    </script>
+    <script src="submitQuestion.js"></script>
+  </body>
+  </html>

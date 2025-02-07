@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathGoesRetro</title>
+    <link rel="stylesheet" href="adminQuestionApprovals.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <img src="../images/logo.png" alt="MathGoesRetro Logo" class="logo">
+
+        <h1 class="pageTitle">Question Approvals</h1>
+
+        <div id="searchPlayerContainer">
+            <input id="taskSearch" type="text" placeholder="Enter a Question ID to search">
+            <button id="filterButton">
+                Filter
+            </button>
+        </div>
+
+        <div id="accountLabelContainer">
+            <label> Question Requests: </label>
+        </div>
+        <div id="userContainer">
+            <div class="userLabelContainer">
+                <label id="taskIdLabel" class="userLabel"> Task ID: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="questionLabel" class="userLabel"> Question: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskWrongOneLabel" class="userLabel"> Wrong Answer 1: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskWrongTwoLabel" class="userLabel"> Wrong Answer 2: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskWrongThreeLabel" class="userLabel"> Wrong Answer 3: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskAnswerLabel" class="userLabel"> Correct Answer: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskTopicLabel" class="userLabel"> Topic: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="taskDifficultyLabel" class="userLabel"> Difficulty: </label>
+            </div>
+        </div>
+
+        <div class="tableContainer" >
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th> Question ID </th>
+                        <th> Topic </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="adminLowerButtonGroup">
+            <button id="approveButton" class="blueButtons">
+                Approve
+            </button>
+            <a href="/mathGoesRetro_frontend/Admin/adminRequestManagement.html">
+                <button id="cancelButton" class="blueButtons">
+                    Back
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let tasks = []; // Store fetched tasks
+        let filteredTasks = []; // Store filtered tasks after applying filter
+
+        let viewTaskID;
+        let viewQuestion;
+        let viewWrongOne;
+        let viewWrongTwo;
+        let viewWrongThree;
+        let viewCorrectAnswer;
+        let viewTopic;
+        let viewDifficulty;
+
+        // Fetch tasks from backend
+        async function fetchTasks() {
+            try {
+                const response = await fetch('http://localhost:3000/api/tasks'); // Fetch tasks
+                tasks = await response.json();
+                renderTasks(tasks); // Render users initially
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        }
+
+        // Render only filtered users
+        function renderTasks(tasksToRender) {
+            const tableBody = document.getElementById('taskTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            tasksToRender.forEach(task => {
+                if (task.status == 'n') {
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${task.task_id}</td>
+                    <td>${task.topic}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+        }
+
+        // Render only filtered users
+        function renderFilteredTasks(tasksToRender) {
+            taskId = Number(document.getElementById("taskSearch").value);
+            const tableBody = document.getElementById('taskTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            tasksToRender.forEach(task => {
+                if ((task.task_id == taskId) && task.status == 'n') {
+                    viewTaskID = task.task_id;
+                    viewQuestion = task.question;
+                    viewWrongOne = task.wrong_answer1;
+                    viewWrongTwo = task.wrong_answer2;
+                    viewWrongThree = task.wrong_answer3;
+                    viewCorrectAnswer = task.correct_answer;
+                    viewTopic = task.topic;
+                    viewDifficulty = task.difficulty;
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${task.task_id}</td>
+                    <td>${task.topic}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+            const rows = tableBody.getElementsByTagName('tr');
+            const rowCount = rows.length;
+
+            document.getElementById("taskIdLabel").innerHTML = "Task ID:"
+            document.getElementById("questionLabel").innerHTML = "Question:";
+            document.getElementById("taskWrongOneLabel").innerHTML = "Wrong Answer 1:";
+            document.getElementById("taskWrongTwoLabel").innerHTML = "Wrong Answer 2:";
+            document.getElementById("taskWrongThreeLabel").innerHTML = "Wrong Answer 3:";
+            document.getElementById("taskAnswerLabel").innerHTML = "Correct Answer:";
+            document.getElementById("taskTopicLabel").innerHTML = "Topic:";
+            document.getElementById("taskDifficultyLabel").innerHTML = "Difficulty:";
+
+            if (rowCount == 0) {
+                fetchTasks();
+            }
+        }
+
+        document.getElementById("filterButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            renderFilteredTasks(tasks);
+
+            const taskTableBody = document.getElementById('taskTable').querySelector('tbody');
+            const taskRows = taskTableBody.getElementsByTagName('tr');
+            const taskRowCount = taskRows.length;
+            if (taskRowCount == 1) {
+                document.getElementById("taskIdLabel").innerHTML = "Task ID: " + viewTaskID;
+                document.getElementById("questionLabel").innerHTML = "Question: " + viewQuestion;
+                document.getElementById("taskWrongOneLabel").innerHTML = "Wrong Answer 1: " + viewWrongOne;
+                document.getElementById("taskWrongTwoLabel").innerHTML = "Wrong Answer 2: " + viewWrongTwo;
+                document.getElementById("taskWrongThreeLabel").innerHTML = "Wrong Answer 3: " + viewWrongThree;
+                document.getElementById("taskAnswerLabel").innerHTML = "Correct Answer: " + viewCorrectAnswer;
+                document.getElementById("taskTopicLabel").innerHTML = "Topic: " + viewTopic;
+                document.getElementById("taskDifficultyLabel").innerHTML = "Difficulty: " + viewDifficulty;
+            }
+        });
+
+        async function approveQuestion() {
+            const questionId = Number(document.getElementById("taskSearch").value);
+
+            // Show a confirmation dialog
+            const isConfirmed = window.confirm("Are you sure you want to approve this question?");
+
+            if (!isConfirmed) {
+                return; // If the admin cancels, exit the function
+            }
+
+            const updatedData = {
+                status : "a"
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/tasks/approve/${questionId}`, {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'},
+                body: JSON.stringify(updatedData),
+        });
+
+        if (response.ok) { // Check if the response status is 200-299
+            const result = await response.json();
+            alert("Question approved successfully.");
+
+            // Refresh the user table
+            fetchTasks();
+        } else {
+            const result = await response.json(); // Parse the error message
+            alert(result.message || "Failed to approve the question"); // Show backend error if available
+        }
+    } catch (error) {
+        console.error("Error approving question:", error);
+        alert("An error occurred while approving the question.");
+    }
+}
+
+
+    document.getElementById("approveButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            approveQuestion();
+        });
+
+    // Fetch tasks on page load
+    fetchTasks();
+    </script>
+</body>
+</html>

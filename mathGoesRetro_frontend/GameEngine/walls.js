@@ -1,0 +1,136 @@
+import { BLOCK_SIZE } from './globalsKruncher.js';
+
+
+export class Walls {
+    constructor() {
+        this.walls = [
+                { x: 243, y: 3, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 33, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 153, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 333, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 453, y: 33, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 33, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 213, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 273, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 453, y: 93, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 123, y: 123, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 123, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 123, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 3, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 33, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 153, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 333, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 453, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 483, y: 153, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 63, y: 183, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 183, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 183, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 183, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 3, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 213, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 273, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 483, y: 213, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 3, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 33, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 213, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 273, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 453, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 483, y: 273, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 63, y: 303, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 303, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 303, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 303, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 3, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 213, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 273, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 483, y: 333, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 243, y: 363, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 33, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 153, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 333, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 453, y: 393, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 63, y: 423, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 423, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 3, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 63, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 123, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 183, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 213, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 273, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 303, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 423, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 483, y: 453, width: BLOCK_SIZE, height: BLOCK_SIZE },
+            
+                { x: 123, y: 483, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 363, y: 483, width: BLOCK_SIZE, height: BLOCK_SIZE },
+                { x: 243, y: 483, width: BLOCK_SIZE, height: BLOCK_SIZE },
+         ];
+    }
+    getWalls() {
+        return this.walls;
+    }
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathGoesRetro</title>
+    <link rel="stylesheet" href="adminHostApprovals.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <img src="../images/logo.png" alt="MathGoesRetro Logo" class="logo">
+
+        <h1 class="pageTitle">Host Approvals</h1>
+
+        <div id="searchPlayerContainer">
+            <input id="userSearch" type="text" placeholder="Enter a Host ID to search">
+            <button id="filterButton">
+                Filter
+            </button>
+        </div>
+
+        <div id="accountLabelContainer">
+            <label> Host Account Requests: </label>
+        </div>
+        <div id="userContainer">
+            <div class="userLabelContainer">
+                <label id="hostIDLabel" class="userLabel"> Host ID: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="hostNameLabel" class="userLabel"> Hostname: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="hostEmailLabel" class="userLabel"> Host E-Mail: </label>
+            </div>
+        </div>
+
+        <div class="tableContainer" >
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th> Host ID </th>
+                        <th> Hostname </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="adminLowerButtonGroup">
+            <button id="approveButton" class="blueButtons">
+                Approve
+            </button>
+            <a href="/mathGoesRetro_frontend/Admin/adminRequestManagement.html">
+                <button id="cancelButton" class="blueButtons">
+                    Back
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let users = []; // Store fetched users
+        let filteredUsers = []; // Store filtered users after applying filter
+
+        let viewHostID;
+        let viewHostName;
+        let viewHostEmail;
+
+        // Fetch users from backend
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:3000/api/users'); // Fetch users
+                users = await response.json();
+                renderUsers(users); // Render users initially
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+
+        // Render only filtered users
+        function renderUsers(usersToRender) {
+            const tableBody = document.getElementById('userTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            usersToRender.forEach(user => {
+                if (user.role == 'H' && user.account_status == 'd') {
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+        }
+
+        // Render only filtered users
+        function renderFilteredUsers(usersToRender) {
+            userId = Number(document.getElementById("userSearch").value);
+            const tableBody = document.getElementById('userTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            usersToRender.forEach(user => {
+                if (user.role == 'H' && user.user_id == userId && user.account_status == 'd') {
+                    viewHostID = user.user_id;
+                    viewHostName = user.username;
+                    viewHostEmail = user.email;
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+            const rows = tableBody.getElementsByTagName('tr');
+            const rowCount = rows.length;
+
+            document.getElementById("hostIDLabel").innerHTML = "Host ID:";
+            document.getElementById("hostNameLabel").innerHTML = "Hostname:";
+            document.getElementById("hostEmailLabel").innerHTML = "Host E-Mail:";
+
+            if (rowCount == 0) {
+                fetchUsers();
+            }
+        }
+
+        document.getElementById("filterButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            renderFilteredUsers(users);
+
+            const hostTableBody = document.getElementById('userTable').querySelector('tbody');
+            const hostRows = hostTableBody.getElementsByTagName('tr');
+            const hostRowCount = hostRows.length;
+            if (hostRowCount == 1) {
+                document.getElementById("hostIDLabel").innerHTML = "User ID: " + viewHostID;
+                document.getElementById("hostNameLabel").innerHTML = "Username: " + viewHostName;
+                document.getElementById("hostEmailLabel").innerHTML = "User E-Mail: " + viewHostEmail;
+            }
+        });
+
+        async function approveHost() {
+            const hostId = Number(document.getElementById("userSearch").value);
+
+            // Show a confirmation dialog
+            const isConfirmed = window.confirm("Are you sure you want to approve this host?");
+
+            if (!isConfirmed) {
+                return; // If the admin cancels, exit the function
+            }
+
+            const updatedData = {
+                account_status : "a"
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/host/deactivate/${userId}`, {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'},
+                body: JSON.stringify(updatedData),
+        });
+
+        if (response.ok) { // Check if the response status is 200-299
+            const result = await response.json();
+            alert("Host approved successfully.");
+
+            // Refresh the user table
+            fetchUsers();
+        } else {
+            const result = await response.json(); // Parse the error message
+            alert(result.message || "Failed to approve the host"); // Show backend error if available
+        }
+    } catch (error) {
+        console.error("Error approving host profile:", error);
+        alert("An error occurred while approving the host profile.");
+    }
+}    
+
+    document.getElementById("approveButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            approveHost();
+        });
+
+    // Fetch users on page load
+    fetchUsers();
+    </script>
+</body>
+</html>

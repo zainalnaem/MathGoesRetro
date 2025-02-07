@@ -1,0 +1,4 @@
+"[asset name]" by [author name] licensed [license(s)]: [asset url]
+
+LICENCE: PUBLIC DOMAIN
+CC0

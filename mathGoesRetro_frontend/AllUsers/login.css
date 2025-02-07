@@ -1,0 +1,118 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1c1c1c;
+}
+
+/* Main container */
+.container {
+    text-align: center;
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    width: 320px;
+    height: 480px;
+}
+
+/* Logo styling */
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+    border: 3px solid #00ffcc;
+    padding: 5px;
+    background-color: #111;
+    box-shadow: 0 0 10px 2px #ff00ff;
+}
+
+/* Page title */
+.page-title {
+    font-size: 20px;
+    color: #00ffcc;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+/* Form and input groups */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    color: #00ffcc;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    background-color: #222;
+    color: #fff;
+}
+
+/* Submit button */
+.retro-button {
+    padding: 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.retro-button:hover {
+    background-color: #00ffcc;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+}
+
+/* Register link */
+.register-link {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #00ffcc;
+    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+}
+
+.register-link a {
+    color: #ff00ff;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+.forgotPassword-link a {
+    margin-top: 20px;
+    font-size: 10px;
+    color: #fca7fc;
+    text-decoration: none;
+    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.8);
+}
+
+.forgotPassword-link a:hover {
+    text-decoration: underline;
+}

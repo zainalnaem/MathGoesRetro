@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathGoesRetro</title>
+    <link rel="stylesheet" href="adminViewAccounts.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <img src="../images/logo.png" alt="MathGoesRetro Logo" class="logo">
+
+        <h1 class="pageTitle">View Accounts</h1>
+
+        <div id="searchPlayerContainer">
+            <input id="userSearch" type="text" placeholder="Enter a Player ID to search">
+            <button id="filterButton">
+                Filter
+            </button>
+        </div>
+
+        <div id="accountLabelContainer">
+            <label> User Account: </label>
+        </div>
+        <div id="userContainer">
+            <div class="userLabelContainer">
+                <label id="userIDLabel" class="userLabel"> User ID: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="userNameLabel" class="userLabel"> Username: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="userEmailLabel" class="userLabel"> User E-Mail: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="userRoleLabel" class="userLabel"> User Role: </label>
+            </div>
+            <div class="userLabelContainer">
+                <label id="userStatusLabel" class="userLabel"> User Account Status: </label>
+            </div>
+        </div>
+
+        <div class="tableContainer" >
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th> User ID </th>
+                        <th> Username </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="adminLowerButtonGroup">
+            <button id="viewButton" class="blueButtons">
+                View
+            </button>
+            <a href="/mathGoesRetro_frontend/Admin/adminAccountManagement.html">
+                <button id="cancelButton" class="blueButtons">
+                    Back
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let users = []; // Store fetched users
+        let filteredUsers = []; // Store filtered users after applying filter
+
+        let viewUserID;
+        let viewUserName;
+        let viewUserEmail;
+        let viewUserType;
+        let viewUserStatus;
+
+        // Fetch users from backend
+        async function fetchUsers() {
+            try {
+                const response = await fetch('http://localhost:3000/api/users'); // Fetch users
+                users = await response.json();
+                renderUsers(users); // Render users initially
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+
+        // Render only filtered users
+        function renderUsers(usersToRender) {
+            const tableBody = document.getElementById('userTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            usersToRender.forEach(user => {
+                if (user.role == 'P' || user.role == 'H') {
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+        }
+
+        // Render only filtered users
+        function renderFilteredUsers(usersToRender) {
+            userId = Number(document.getElementById("userSearch").value);
+            const tableBody = document.getElementById('userTable').querySelector('tbody');
+            tableBody.innerHTML = ''; // Clear table
+
+            usersToRender.forEach(user => {
+                if ((user.role == 'P' || user.role == 'H') && user.user_id == userId) {
+                    viewUserID = user.user_id;
+                    viewUserName = user.username;
+                    viewUserEmail = user.email;
+                    viewUserType = user.role;
+                    viewUserStatus = user.account_status;
+                    const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.user_id}</td>
+                    <td>${user.username}</td>
+                `;
+                tableBody.appendChild(row);
+                }
+            });
+            const rows = tableBody.getElementsByTagName('tr');
+            const rowCount = rows.length;
+
+            document.getElementById("userIDLabel").innerHTML = "User ID:";
+            document.getElementById("userNameLabel").innerHTML = "Username:";
+            document.getElementById("userEmailLabel").innerHTML = "User E-Mail:";
+            document.getElementById("userRoleLabel").innerHTML = "User Role:";
+            document.getElementById("userStatusLabel").innerHTML = "User Account Status:";
+
+            if (rowCount == 0) {
+                fetchUsers();
+            }
+        }
+
+        document.getElementById("filterButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            renderFilteredUsers(users);
+        });
+
+        async function viewUser() {
+            renderFilteredUsers(users);
+
+            const userTableBody = document.getElementById('userTable').querySelector('tbody');
+            const userRows = userTableBody.getElementsByTagName('tr');
+            const userRowCount = userRows.length;
+            if (userRowCount == 1) {
+                document.getElementById("userIDLabel").innerHTML = "User ID: " + viewUserID;
+                document.getElementById("userNameLabel").innerHTML = "Username: " + viewUserName;
+                document.getElementById("userEmailLabel").innerHTML = "User E-Mail: " + viewUserEmail;
+                document.getElementById("userRoleLabel").innerHTML = "User Role: " + viewUserType;
+                document.getElementById("userStatusLabel").innerHTML = "User Account Status: " + viewUserStatus;
+            }
+        }
+
+    document.getElementById("viewButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            viewUser();
+        });
+
+    // Fetch users on page load
+    fetchUsers();
+    </script>
+</body>
+</html>

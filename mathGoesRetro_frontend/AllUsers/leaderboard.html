@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="leaderboard.css">
+  <link rel="stylesheet" href="header.css"> <!-- Link the header CSS -->
+</head>
+<body>
+  <div id="header" class="header-container"></div> <!-- Header section -->
+  <div class="content-container">
+    <div class="leaderboard-container">
+      <h1 class="title">
+        <span class="trophy-icon">🏆</span> Leaderboard
+      </h1>
+      <table class="leaderboard">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+          <!-- Dynamic content will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="leaderboard.js"></script>
+  <script src="header.js"></script> <!-- Include header JS -->
+  <script>
+    // Load Header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level Select</title>
+    <link rel="stylesheet" href="levelSelect.css">
+    <link rel="stylesheet" href="../AllUsers/header.css"> <!-- Link the header CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Include Header -->
+        <div id="header"></div>
+
+        <h1 id="gameTitleHeader" class="page-title">Math Mamba</h1>
+        <p class="total-score">Total Score: <span id="totalScore"></span></p>
+        <div class="level-list"></div>
+    </div>
+
+    <!-- Popup warning -->
+    <div id="warningPopup" class="warning-popup hidden">
+        <div class="warning-content">
+            <button id="closeWarning" class="close-warning">✖</button>
+            <p>You must pass the previous level to unlock this one!</p>
+        </div>
+    </div>
+    <script src="../AllUsers/header.js"></script> <!-- Include header JS -->
+    <script>
+      // Load Header
+      fetch('../AllUsers/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading header:', error));
+    </script>
+
+    <script src="levelSelect1.js"></script>
+  
+</body>
+</html>

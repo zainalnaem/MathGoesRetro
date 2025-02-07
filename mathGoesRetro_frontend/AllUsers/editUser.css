@@ -1,0 +1,107 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #191919;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 350px;
+    border: 3px solid #ff007a;
+  }
+  
+  .retro-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #00d9ff;
+    text-shadow: 2px 2px #000;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ff007a;
+    text-shadow: 1px 1px #000;
+  }
+  
+  input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 2px solid #00d9ff;
+    border-radius: 5px;
+    background-color: #1a1a2e;
+    color: #fff;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px #000;
+  }
+  
+  input:read-only {
+    background-color: #333;
+  }
+  
+  .button-group {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 #000;
+    margin: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  #editButton {
+    background-color: #ff007a;
+    color: #fff;
+  }
+  
+  #editButton:hover {
+    background-color: #00d9ff;
+  }
+  
+  #saveButton {
+    background-color: #00d9ff;
+    color: #fff;
+  }
+  
+  #saveButton:hover:not(:disabled) {
+    background-color: #ff007a;
+  }
+  
+  #saveButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }
+
+#cancelButton {
+    background-color: #ff3300;
+    color: #fff;
+  }
+  
+  #cancelButton:hover:not(:disabled) {
+    background-color: #ff6600;
+  }
+  
+  #cancelButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }

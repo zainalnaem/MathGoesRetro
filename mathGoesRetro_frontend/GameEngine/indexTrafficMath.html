@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+            font-family: 'ComputerPixel';
+            src: url('fonts/ComputerPixel7-mnL2.ttf') format('truetype');
+        }
+
+        /* Basic body style */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #202020;
+            /* Dark background */
+            color: #7ABFC7;
+            /* Neon green text */
+            font-family: 'PixelFont', monospace;
+        }
+
+        /* Canvas styling */
+        #canvasTrafficMath {
+            border: 2px solid #7ABFC7;
+            display: block;
+            margin: 0 auto;
+            background: #151515;
+            touch-action: none;
+            box-shadow: 0 0 4px #7ABFC7;
+            /* Glow effect */
+        }
+
+        .question, .answer {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            font-style: normal;
+            font-family: 'ComputerPixel', monospace; /* Schriftart */
+            color: #7ABFC7;
+            text-shadow: 0 0 4px #7ABFC7; /* Glow effect */
+        }
+
+        .score {
+            position: fixed;
+            bottom: 20px;
+            /* Space from the bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            font-family: 'ComputerPixel', monospace;
+            color: #7ABFC7;
+            text-shadow: 0 0 4px #7ABFC7;
+            /* Glow effect */
+        }
+
+        .invisible-control {
+            opacity: 0;
+            /* Makes the button invisible */
+            pointer-events: auto;
+            /* Keeps the button interactive */
+            position: absolute;
+            /* Prevents layout shifting */
+            width: 50px;
+            /* Size matches your original button dimensions */
+            height: 50px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Media Queries for Extra Small Screens */
+        @media (max-width: 480px) {
+
+            .question,
+            .score {
+                font-size: clamp(14px, 5vw, 32px);
+                /* Scale down for smaller screens */
+            }
+
+            #canvasTrafficMath {
+                width: 95vw;
+                /* Occupy more space on small screens */
+                height: 95vw;
+            }
+        }
+    </style>
+    <!-- KaTeX CSS for displaying -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+
+    <title>MathGoesRetro - Traffic Math Prototype</title>
+
+    <!-- KaTeX CSS for formatting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+</head>
+
+<body>
+    <!-- Canvas displaying the game -->
+    <canvas id="canvasTrafficMath" tabindex="0" width="516" height="516"></canvas>
+
+    <!-- Question -->
+    <div style="font-size: 24px;" class="question"></div>
+
+    <!-- Game score -->
+    <div class="score">Score: 0</div>
+
+    <!-- Invisible Controls for touch and mouse input -->
+    <div class="controls">
+        <div class="vertical-controls">
+            <button id="up" class="control-button invisible-control">↑</button>
+        </div>
+        <div class="horizontal-controls">
+            <button id="left" class="control-button invisible-control">←</button>
+            <button id="right" class="control-button invisible-control">→</button>
+        </div>
+        <div class="vertical-controls">
+            <button id="down" class="control-button invisible-control">↓</button>
+        </div>
+    </div>
+
+    <!-- Your game script -->
+    <script src="./c64Colors.js" type="module"></script> <!-- Add this line -->
+    <script src="./mainTrafficMath.js" type="module"></script>
+    <script src="./touchControls.js"></script> <!-- Add touch -->
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },  // Block-Formeln
+                    { left: "$", right: "$", display: false }   // Inline-Formeln
+                ],
+                throwOnError: false
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+        // Prevent default scrolling behavior for arrow keys
+        document.addEventListener("keydown", function (event) {
+            const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+            if (keysToPrevent.includes(event.key)) {
+                event.preventDefault();
+            }
+        });
+
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },  // Block formulas
+                    { left: "$", right: "$", display: false }   // Inline formulas
+                ],
+                throwOnError: false
+            });
+        });
+    </script>
+</body>
+
+</html>

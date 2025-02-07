@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View and Edit User</title>
+  <link rel="stylesheet" href="editUser.css">
+  <link rel="stylesheet" href="header.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+      <!-- Include Header -->
+  <div id="header"></div>
+  <div class="container">
+    <h1 class="retro-title">User Profile</h1>
+    <form id="userForm" onsubmit="saveChanges(event)">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" value="currentUsername" readonly>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" value="currentPassword" placeholder="Enter/Edit your password" readonly>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password" readonly>
+    </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" value="currentEmail@example.com" readonly>
+      </div>
+      <div class="button-group">
+        <button type="button" id="editButton" onclick="enableEditing()">Edit</button>
+        <button type="submit" id="saveButton" disabled>Save</button>
+        <button type="button" id="cancelButton" onclick="cancelEditing()" disabled>Cancel</button>
+      </div>
+    </form>
+  </div>
+  <script src="editUser.js"></script>
+  <script src="header.js"></script> <!-- Include header JS -->
+  <script>
+    // Load Header
+    fetch('header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+</body>
+</html>
