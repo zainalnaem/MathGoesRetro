@@ -1,4 +1,8 @@
-/* General Styles */
+/**
+ * Styles the question submission page with a retro theme, 
+ * including a neon color palette, glowing effects, and responsive design.
+ */
+
 body {
     font-family: 'Press Start 2P';
     background-color: #191919;

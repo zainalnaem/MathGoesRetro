@@ -1,13 +1,26 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles game logic for Math Mamba, including task management, 
+ * generating answer squares, obstacles, and rendering game elements.
+ */
+
 import { BORDER_MARGIN, BLOCK_SIZE } from './globals.js';
 import { getColorByName } from './c64Colors.js';
-import { 
-    canvasWidth, canvasHeight, currentStage, generateRandomSquarePosition, currentLevel
+import {
+    canvasWidth, canvasHeight, currentStage, generateRandomSquarePosition,
+    currentLevel
 } from './mainMathMamba.js';
 
 
 export const answerSquares = [];    // 1 Correct and 3 wrong answers
 export let squarePlayerArray = [];       // Will be used for player's body later, e.g. the mamba
-export let squarePlayer;
 export let correctAnswerSquare;     // This will hold the current square for correct answer
 
 export const obstacles = [];           // Will be used for obstacles later
@@ -29,7 +42,6 @@ export async function fetchTasks() {
     try {
         const response = await fetch('http://localhost:3000/api/tasks');
         tasks = await response.json();
-        loadRandomTask();
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
@@ -93,22 +105,8 @@ function renderAnswers() {
     wrongAnswer3 = currentTask.wrong_answer3;
 }
 
-// Initialize the player's square and squares for correct answer and wrong answers
-export function initializeSquaresArray() {
-    createPlayerSquareArray();  // Add the player to the squares array
-    createCorrectAnswerSquare();    // Initialize square for correct answer
-    createWrongAnswersSquare();     // Create square for wrong answers
-}
-
-// Initialize the player's square and squares for correct answer and wrong answers
-export function initializeSquares() {
-    createPlayerSquare();  // Add the player to the squares array
-    createCorrectAnswerSquare();    // Initialize square for correct answer
-    createWrongAnswersSquare();     // Create square for wrong answers
-}
-
 // Initialize player's square (snake's head)
-function createPlayerSquareArray() {
+export function createPlayerSquareArray() {
     squarePlayerArray = [
         new Square(
             BORDER_MARGIN,
@@ -125,25 +123,13 @@ function createPlayerSquareArray() {
     ];
 }
 
-// Initialize player's square (kruncher)
-function createPlayerSquare() {
-    squarePlayer =
-        new Square(
-            BORDER_MARGIN,
-            BORDER_MARGIN,
-            BLOCK_SIZE,
-            "",
-            getColorByName('Yellow'),
-            "",
-            false,
-            false,
-            null,
-            ""
-        );
+export function createAnswerSquares() {
+    createCorrectAnswerSquare();
+    createWrongAnswersSquare();
 }
 
 // Create a new square for correct answer at a random position
-export function createCorrectAnswerSquare() {
+function createCorrectAnswerSquare() {
     const { x, y } = generateValidPosition();
 
     // Create new square for correct answer
@@ -166,13 +152,19 @@ export function createCorrectAnswerSquare() {
 export function createWrongAnswersSquare() {
     let wrongAnswers = [];
 
-    if (currentLevel === 1 || currentLevel === 4 || currentLevel === 7) {
-        wrongAnswers = [wrongAnswer1]; // Array with one wrong answer
-    } else  {
-        wrongAnswers = [wrongAnswer1, wrongAnswer2, wrongAnswer3]; // Array of 3 wrong answers
+    switch (currentStage) {
+        case 1:
+            wrongAnswers = [wrongAnswer1]; // Array with one wrong answer
+            break;
+        case 2:
+        case 3:
+            wrongAnswers = [wrongAnswer1, wrongAnswer2, wrongAnswer3]; // Array of 3 wrong answers
+            break;
+        default:
+            wrongAnswers = [];
     }
 
-    wrongAnswers.forEach((wrongAnswer, index) => {
+    wrongAnswers.forEach((wrongAnswer) => {
         const { x, y } = generateValidPosition();
 
         // Create new square for wrong answer
@@ -195,33 +187,28 @@ export function createWrongAnswersSquare() {
 }
 
 export function createObstacles() {
-    console.log("Hello from obstacles");
-    if (currentStage === 3) {
-        // Create obstacles for Level 3
-        console.log("Creating obstacles for Level 3");
-        for (let i = 0; i < AMOUNT_OBSTACLES; i++) {   // Create 4 obstacles
-            const { x, y } = generateValidPosition();
+    // Create obstacles for Level 3
+    for (let i = 0; i < AMOUNT_OBSTACLES; i++) {   // Create 4 obstacles
+        const { x, y } = generateValidPosition();
 
-            // Create new square for obstacle
-            const obstacle = new Square(
-                x,
-                y,
-                BLOCK_SIZE,
-                "",             // Text
-                getColorByName('Grey'), // Color of square
-                "",             // Color of text
-                false,          // False: Marking it as a correct answer 
-                false,          // False: Marking it as a wrong answer
-                null,           // No image
-                ""              // 🍓
-            );
+        // Create new square for obstacle
+        const obstacle = new Square(
+            x,
+            y,
+            BLOCK_SIZE,
+            "",             // Text
+            getColorByName('Grey'), // Color of square
+            "",             // Color of text
+            false,          // False: Marking it as a correct answer 
+            false,          // False: Marking it as a wrong answer
+            null,           // No image
+            ""              // 🍓
+        );
 
-            // Add square of obstacle to the squares array
-            obstacles.push(obstacle);
-        }
-    } else {
-        console.log("No obstacles for Level 1 or 2");
+        // Add square of obstacle to the squares array
+        obstacles.push(obstacle);
     }
+
 }
 
 function generateValidPosition(isObstacle = false) {
@@ -233,7 +220,7 @@ function generateValidPosition(isObstacle = false) {
         ({ x, y } = generateRandomSquarePosition(squarePlayerArray[0])); // Not on player's square
 
         // Define the minimum distance from the border for obstacles
-        const minDistanceFromBorder = isObstacle 
+        const minDistanceFromBorder = isObstacle
             ? BORDER_MARGIN + (BLOCK_SIZE * MIN_DIST_BORDER) // Obstacles must be at least x squares from the border
             : BORDER_MARGIN; // Default for other squares
 
@@ -300,7 +287,6 @@ export class Square {
             // Set the color dynamically based on square type
             if (this.player) {
                 if (squarePlayerArray.indexOf(this) !== 0) {
-                    console.log("Setting color to Orange");
                     ctx.fillStyle = getColorByName('Orange');
                 }
             } else {

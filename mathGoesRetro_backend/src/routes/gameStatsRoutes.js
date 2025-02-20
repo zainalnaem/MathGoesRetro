@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Melvyn Wilbert Tjandra
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles game statistics-related requests, including retrieving, creating, updating,
+ * and querying stats for specific users and games, as well as fetching the leaderboard.
+ */
+
 const express = require('express');
 const gamestatsController = require('../controllers/gameStatsController');
 const router = express.Router();

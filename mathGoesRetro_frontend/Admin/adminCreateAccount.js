@@ -1,3 +1,17 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Gonçalo Oliveira Cardoso
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles user registration when the confirm button is clicked.
+ * Validates that passwords match and a role is selected, then sends the registration data to the backend.
+ * If successful, it creates initial GameStats entries for the new user.
+ */
+
 document.getElementById('confirmButton').addEventListener('click', async (event) => {
     event.preventDefault(); // Prevent default button behavior
 

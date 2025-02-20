@@ -1,3 +1,17 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Gonçalo Oliveira Cardoso, Melvyn Wilbert Tjandra, Paul Schöpfer, Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Sets up an Express.js server with CORS enabled and environment variables loaded.
+ * It includes routes for user, task, game, and game statistics management. 
+ * The server listens on a specified port (default 3000).
+ */
+
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');

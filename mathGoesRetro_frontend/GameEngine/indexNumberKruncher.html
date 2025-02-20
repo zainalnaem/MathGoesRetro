@@ -1,4 +1,17 @@
+<!-- 
+    Name: MathGoesRetro
+    Author: Zain Aldin Zaher Alnaem
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
 <!DOCTYPE html>
+<!--
+    Number Kruncher Game layout with canvas, UI elements, controls, 
+    and KaTeX for rendering math equations.
+-->
+
 <html lang="en">
 
 <head>
@@ -30,7 +43,8 @@
         #canvas {
             border: 2px solid #7ABFC7;
             display: block;
-            margin: 20px auto; /* Adjust top margin */
+            margin: 20px auto;
+            /* Adjust top margin */
             margin-top: 140px;
             background: #151515;
             touch-action: none;
@@ -115,72 +129,101 @@
             text-shadow: 0 0 10px #7ABFC7;
             /* Glow effect */
         }
-        
+
         .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
         .popup-content {
-        font-size: 30px;
-        background: rgba(34, 34, 34, 0.8);
-        padding: 20px;
-        text-align: center;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 255, 0, 0.6); /* Neon green shadow */
-        color: #ff3305; /* Neon green text */
-        font-family: 'Press Start 2P'; /* Retro-style font */
-        width: 60%; /* Adjust width to make it smaller */
-        max-width: 500px; /* Max width to prevent it from getting too large */
-        min-width: 300px; /* Optional: ensures it doesn't get too small */
+            font-size: 30px;
+            background: rgba(34, 34, 34, 0.8);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.6);
+            /* Neon green shadow */
+            color: #ff3305;
+            /* Neon green text */
+            font-family: 'Press Start 2P';
+            /* Retro-style font */
+            width: 60%;
+            /* Adjust width to make it smaller */
+            max-width: 500px;
+            /* Max width to prevent it from getting too large */
+            min-width: 300px;
+            /* Optional: ensures it doesn't get too small */
         }
 
         .hidden {
-        display: none;
+            display: none;
         }
 
         .popup-content button {
-        background: #000; /* Black background for contrast */
-        color: #00ff00; /* Neon green text color */
-        font-family: 'Press Start 2P'; /* Retro font */
-        font-size: 18px; /* Adjust font size */
-        padding: 10px 20px; /* Button padding */
-        border: 2px solid #00ff00; /* Neon green border */
-        border-radius: 8px; /* Rounded corners */
-        text-transform: uppercase; /* Capitalize button text */
-        cursor: pointer; /* Pointer cursor on hover */
-        margin: 10px; /* Spacing between buttons */
-        transition: 0.3s ease; /* Smooth hover effect */
-        box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.6); /* Neon glow */
+            background: #000;
+            /* Black background for contrast */
+            color: #00ff00;
+            /* Neon green text color */
+            font-family: 'Press Start 2P';
+            /* Retro font */
+            font-size: 18px;
+            /* Adjust font size */
+            padding: 10px 20px;
+            /* Button padding */
+            border: 2px solid #00ff00;
+            /* Neon green border */
+            border-radius: 8px;
+            /* Rounded corners */
+            text-transform: uppercase;
+            /* Capitalize button text */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            margin: 10px;
+            /* Spacing between buttons */
+            transition: 0.3s ease;
+            /* Smooth hover effect */
+            box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.6);
+            /* Neon glow */
         }
 
         .popup-content button:hover {
-        background: #00ff00; /* Neon green background on hover */
-        color: #000; /* Black text on hover */
-        box-shadow: 0 0 20px 4px rgba(0, 255, 0, 1); /* Stronger glow on hover */
-        transform: scale(1.1); /* Slightly enlarge on hover */
+            background: #00ff00;
+            /* Neon green background on hover */
+            color: #000;
+            /* Black text on hover */
+            box-shadow: 0 0 20px 4px rgba(0, 255, 0, 1);
+            /* Stronger glow on hover */
+            transform: scale(1.1);
+            /* Slightly enlarge on hover */
         }
 
         .popup-content button:active {
-        transform: scale(1); /* Reset scale when pressed */
-        box-shadow: 0 0 5px 1px rgba(0, 255, 0, 0.6); /* Subtle glow on press */
-    }
+            transform: scale(1);
+            /* Reset scale when pressed */
+            box-shadow: 0 0 5px 1px rgba(0, 255, 0, 0.6);
+            /* Subtle glow on press */
+        }
 
         .invisible-control {
-        opacity: 0; /* Makes the button invisible */
-        pointer-events: auto; /* Keeps the button interactive */
-        position: absolute; /* Prevents layout shifting */
-        width: 50px; /* Size matches your original button dimensions */
-        height: 50px;
+            opacity: 0;
+            /* Makes the button invisible */
+            pointer-events: auto;
+            /* Keeps the button interactive */
+            position: absolute;
+            /* Prevents layout shifting */
+            width: 50px;
+            /* Size matches your original button dimensions */
+            height: 50px;
         }
+
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -196,33 +239,42 @@
         }
 
         /* Media Queries for Extra Small Screens */
-@media (max-width: 480px) {
-.question {
-    font-size: clamp(12px, 5vw, 24px); /* Adjust font size for all elements */
-    top: 65px; /* Adjust top positioning */
-}
+        @media (max-width: 480px) {
+            .question {
+                font-size: clamp(12px, 5vw, 24px);
+                /* Adjust font size for all elements */
+                top: 65px;
+                /* Adjust top positioning */
+            }
 
-.answer1, .answer2 {
-    font-size: clamp(12px, 5vw, 24px); /* Adjust font size for all elements */
-    top: 140px; /* Adjust space for answers */
-}
+            .answer1,
+            .answer2 {
+                font-size: clamp(12px, 5vw, 24px);
+                /* Adjust font size for all elements */
+                top: 140px;
+                /* Adjust space for answers */
+            }
 
-.answer3, .answer4 {
-    font-size: clamp(12px, 5vw, 24px); /* Adjust font size for all elements */
-    top: 190px; /* Adjust space for answers */
-}
+            .answer3,
+            .answer4 {
+                font-size: clamp(12px, 5vw, 24px);
+                /* Adjust font size for all elements */
+                top: 190px;
+                /* Adjust space for answers */
+            }
 
-.score {
-    font-size: clamp(35px, 5vw, 32px); /* Adjust score font size */
-    bottom: 10px; /* Adjust bottom space */
-}
+            .score {
+                font-size: clamp(35px, 5vw, 32px);
+                /* Adjust score font size */
+                bottom: 10px;
+                /* Adjust bottom space */
+            }
 
-#canvas {
-    width: 90vw;
-    height: 90vw;
-}
-}
-
+            #canvas {
+                width: 90vw;
+                height: 90vw;
+            }
+        }
     </style>
     <!-- KaTeX CSS for displaying -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -269,9 +321,9 @@
 
     <div id="gameOverPopup" class="popup hidden">
         <div class="popup-content">
-        <h2>GAME OVER</h2>
-        <button id="restartButton">Restart</button>
-        <button id="homeButton">Back</button>
+            <h2>GAME OVER</h2>
+            <button id="restartButton">Restart</button>
+            <button id="homeButton">Back</button>
         </div>
     </div>
 
@@ -303,13 +355,13 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-        // Prevent default scrolling behavior for arrow keys
-        document.addEventListener("keydown", function (event) {
-            const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-            if (keysToPrevent.includes(event.key)) {
-                event.preventDefault();
-            }
-        });
+            // Prevent default scrolling behavior for arrow keys
+            document.addEventListener("keydown", function (event) {
+                const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+                if (keysToPrevent.includes(event.key)) {
+                    event.preventDefault();
+                }
+            });
 
             renderMathInElement(document.body, {
                 delimiters: [
@@ -322,13 +374,13 @@
     </script>
     <script src="../AllUsers/header.js"></script> <!-- Include header JS -->
     <script>
-       // Load Header
+        // Load Header
         fetch('../AllUsers/header.html')
-        .then(response => response.text())
-        .then(data => {
-        document.getElementById('header').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading header:', error));
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
     </script>
 </body>
 

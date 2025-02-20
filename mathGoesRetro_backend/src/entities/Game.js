@@ -1,3 +1,13 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Gonçalo Oliveira Cardoso
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+/**
+ * Handles game-related operations, including retrieving all games from the database.
+ */
+
 const pool = require('../config/db');
 
 const Game = {

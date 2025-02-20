@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Melvyn Wilbert Tjandra
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!--
+    Level selection page for Traffic Math.
+    Displays available levels, user score, and prevents locked level access.
+    Includes a warning popup for locked levels.
+-->
+
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +23,7 @@
     <link rel="stylesheet" href="../AllUsers/header.css"> <!-- Link the header CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <!-- Include Header -->
@@ -27,16 +43,17 @@
     </div>
     <script src="../AllUsers/header.js"></script> <!-- Include header JS -->
     <script>
-      // Load Header
-      fetch('../AllUsers/header.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('header').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading header:', error));
+        // Load Header
+        fetch('../AllUsers/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
     </script>
 
     <script src="levelSelect3.js"></script>
-  
+
 </body>
+
 </html>

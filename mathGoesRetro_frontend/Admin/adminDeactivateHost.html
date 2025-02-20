@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+
+<!--
+    Name: MathGoesRetro
+    Author: Gonçalo Oliveira Cardoso
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
+<!--
+    Admin Deactivate Host Page:
+    Enables administrators to search for a host by ID and deactivate the host's account.
+-->
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +22,7 @@
     <link rel="stylesheet" href="adminDeactivateHost.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container">
@@ -22,7 +38,7 @@
             </button>
         </div>
 
-        <div class="tableContainer" >
+        <div class="tableContainer">
             <table id="hostTable">
                 <thead>
                     <tr>
@@ -31,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -72,11 +88,11 @@
             usersToRender.forEach(user => {
                 if (user.role == 'H' && user.account_status == 'a') {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
         }
@@ -90,11 +106,11 @@
             usersToRender.forEach(user => {
                 if (user.role == 'H' && user.user_id == userId) {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
             const rows = tableBody.getElementsByTagName('tr');
@@ -120,32 +136,33 @@
             }
 
             const updatedData = {
-                account_status : "d"
+                account_status: "d"
             };
 
             try {
                 const response = await fetch(`http://localhost:3000/api/users/host/deactivate/${userId}`, {
-                method: 'PUT',
-                headers: {
-                'Content-Type': 'application/json'},
-                body: JSON.stringify(updatedData),
-        });
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData),
+                });
 
-        if (response.ok) { // Check if the response status is 200-299
-            const result = await response.json();
-            alert("Host profile deactivated successfully.");
+                if (response.ok) { // Check if the response status is 200-299
+                    const result = await response.json();
+                    alert("Host profile deactivated successfully.");
 
-            // Refresh the user table
-            fetchUsers();
-        } else {
-            const result = await response.json(); // Parse the error message
-            alert(result.message || "Failed to deactivate the host profile."); // Show backend error if available
+                    // Refresh the user table
+                    fetchUsers();
+                } else {
+                    const result = await response.json(); // Parse the error message
+                    alert(result.message || "Failed to deactivate the host profile."); // Show backend error if available
+                }
+            } catch (error) {
+                console.error("Error deactivating host profile:", error);
+                alert("An error occurred while deactivating the host profile.");
+            }
         }
-    } catch (error) {
-        console.error("Error deactivating host profile:", error);
-        alert("An error occurred while deactivating the host profile.");
-    }
-}
 
 
         document.getElementById("deactivateButton").addEventListener('click', (e) => {
@@ -157,4 +174,5 @@
         fetchUsers();
     </script>
 </body>
+
 </html>

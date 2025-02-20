@@ -1,5 +1,19 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Gonçalo Melvyn Wilbert Tjandra, Zain Aldin Zaher Alnaem
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!--
+  Leaderboard page template:
+  - Displays the leaderboard with rankings, usernames, and scores.
+  - Fetches leaderboard data dynamically from the backend using JavaScript.
+  - Includes a header section loaded dynamically from 'header.html'.
+-->
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +22,7 @@
   <link rel="stylesheet" href="leaderboard.css">
   <link rel="stylesheet" href="header.css"> <!-- Link the header CSS -->
 </head>
+
 <body>
   <div id="header" class="header-container"></div> <!-- Header section -->
   <div class="content-container">
@@ -42,4 +57,5 @@
       .catch(error => console.error('Error loading header:', error));
   </script>
 </body>
+
 </html>

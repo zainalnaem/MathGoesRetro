@@ -1,3 +1,15 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Gonçalo Oliveira Cardoso
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Controller for handling game-related requests, including retrieving all games from the database.
+ */
+
 const Game = require('../entities/Game');
 
 // GET all Games

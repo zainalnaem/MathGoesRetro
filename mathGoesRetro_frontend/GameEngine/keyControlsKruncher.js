@@ -1,3 +1,18 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles keyboard input for player movement in the Number Kruncher game,
+ * Manages player movement via keyboard and touch gestures, 
+ * updating direction flags for smooth controls on both desktop and mobile.
+ */
+
+
 export function keyControl() {
     // Initialize movement flags
     window.RIGHT = false;

@@ -1,3 +1,10 @@
+/* 
+    Styles for the level selection page.
+    - Dark retro aesthetic with neon highlights.
+    - Differentiates between active, completed, and locked levels.
+    - Includes a glowing press effect and warning popup for locked levels.
+*/
+
 /* General body styling */
 body {
     margin: 0;

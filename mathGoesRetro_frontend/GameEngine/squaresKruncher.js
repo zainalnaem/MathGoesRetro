@@ -1,3 +1,17 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages game logic for Number Kruncher, including task handling, 
+ * generating answer squares, obstacles, and rendering game elements.
+ */
+
+
 import { BORDER_MARGIN, BLOCK_SIZE, canvasWidth, canvasHeight } from './globalsKruncher.js';
 import { getColorByName } from './c64Colors.js';
 import { currentLevel, mathTopic } from './mainNumber.js';
@@ -18,7 +32,7 @@ let correctAnswer = "";
 let wrongAnswer1 = "";
 let wrongAnswer2 = "";
 let wrongAnswer3 = "";
-export let correctAnswerColor= null; // Store the correct answer's color
+export let correctAnswerColor = null; // Store the correct answer's color
 let wrongAnswerColors = []; // Store the colors for the wrong answers
 
 export async function fetchTasks() {
@@ -97,9 +111,9 @@ function renderAnswers() {
         // Use all four answers for other levels
         activeAnswers = [...allAnswers];
     }
-      wrongAnswerColors = []; // To store the colors of the wrong answers
+    wrongAnswerColors = []; // To store the colors of the wrong answers
 
-       // Shuffle the active answers
+    // Shuffle the active answers
     shuffleArray(activeAnswers);
 
     // Render shuffled answers to their respective divs
@@ -126,7 +140,7 @@ function renderAnswers() {
             wrongAnswerColors.push(color); // Store the remaining colors for the wrong answers
             answerColors.splice(answerColors.indexOf(color), 1); // Remove the used color from the answerColors array
         }
-        
+
         answerDiv.style.backgroundColor = color;
         katex.render(answer.text, answerDiv, { throwOnError: false });
 

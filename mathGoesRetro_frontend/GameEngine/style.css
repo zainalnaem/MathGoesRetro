@@ -1,3 +1,8 @@
+/**
+ * Styles the game layout and UI elements, including fullscreen centering, 
+ * button interactions, and a retro-style floating dialog with a green glow effect.
+ */
+
 body {
     margin: 0;
     padding: 0;
@@ -12,21 +17,20 @@ button:active {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Schwebendes Dialogfenster */
 .floating-dialog {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9); /* Dunkel-transparent */
-    border: 2px solid #00ff00; /* Grüne Umrandung */
+    background: rgba(0, 0, 0, 0.9); /* Dark, transparent */
+    border: 2px solid #00ff00; /* Green border */
     color: #00ff00;
     text-align: center;
     font-family: 'PixelFont', Arial, sans-serif;
     padding: 20px 30px;
     border-radius: 10px;
-    z-index: 1000; /* Über allem */
-    box-shadow: 0 0 10px #00ff00; /* Grüner Schimmer */
+    z-index: 1000; /* Over all */
+    box-shadow: 0 0 10px #00ff00; /* Green glow effect */
 }
 
 .dialog-content p {

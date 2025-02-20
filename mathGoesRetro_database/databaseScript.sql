@@ -1,3 +1,5 @@
+-- This database schema manages users, tasks, games, and game statistics for a retro math game platform.
+
 CREATE DATABASE MathGoesRetro;
 
 -- Users Table

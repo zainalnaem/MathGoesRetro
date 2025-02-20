@@ -1,3 +1,17 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages player movement for the Math Mamba game via keyboard and swipe gestures
+ * while preventing 180-degree turns for smoother and more controlled navigation.
+ */
+
+
 export let currentDirection;
 
 export function keyControl() {
@@ -30,7 +44,7 @@ export function keyControl() {
 
         console.log("Neue Richtung:", newDirection);
 
-        
+
         // Update direction only if it is not a 180-degree turn
         if (newDirection && !isOppositeDirection(newDirection)) {
             currentDirection = newDirection;

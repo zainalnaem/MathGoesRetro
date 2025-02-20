@@ -1,29 +1,40 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages game objects and task handling for the Traffic Math game.
+ * Handles fetching and loading tasks, generating answer squares, 
+ * and defining the Square class for rendering game elements.
+ */
+
+
 import { BORDER_MARGIN, BLOCK_SIZE } from './globals.js';
 import { getColorByName } from './c64Colors.js';
 import {
-    canvasWidth, canvasHeight, lanes
+    canvasHeight, lanes, currentStage
 } from './mainTrafficMath.js';
 
-export const answerSquares = [];    // 1 Correct and 3 wrong answers
 export let squarePlayerArrayCar = [];       // Will be used for player's body later, e.g. the car
-export let correctAnswerSquare;     // This will hold the current square for correct answer
-
-export const obstacles = [];           // Will be used for obstacles later
-const AMOUNT_OBSTACLES = 8;                // Amount of obstacles for Level 3
-const MIN_DIST_BORDER = 2;              // Minimum distance from the border for obstacles
-
-let occupiedLanes = [];  // Array zum Verfolgen der belegten Lanes
 
 // Simulate task fetching and randomization
 export let tasks = []; // List of tasks fetched from server or predefined
 let currentTask = null;
-export let question = "";
-let correctAnswer = "";
-let wrongAnswer1 = "";
-let wrongAnswer2 = "";
-let wrongAnswer3 = "";
+let question = "";
+export let answerSquares = [];    // 1 Correct and 1-3 wrong answers
+export let correctAnswerSquare;     // This will hold the current square for correct answer
+let correctAnswer = "";             // Text inside of the answer
+let wrongAnswer1 = "";              // Text inside of the answer
+let wrongAnswer2 = "";              // Text inside of the answer
 
-let currentStage = 4;
+const AMOUNT_OBSTACLES = 8;                // Amount of obstacles for Level 3
+const MIN_DIST_BORDER = 2;              // Minimum distance from the border for obstacles
+
+let occupiedLanes = [];  // Array to store occupied lanes for placing answer squares
 
 import { mathTopic } from './mainTrafficMath.js';
 
@@ -31,7 +42,6 @@ export async function fetchTasks() {
     try {
         const response = await fetch('http://localhost:3000/api/tasks');
         tasks = await response.json();
-        loadRandomTask();
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
@@ -39,6 +49,10 @@ export async function fetchTasks() {
 
 // Load random task
 export function loadRandomTask() {
+    if (tasks.length === 0) {
+        console.error("No tasks available.");
+        return;  // Don't proceed if no tasks are available
+    }
     if (tasks.length > 0) {
 
         // Filters all tasks by topic
@@ -51,8 +65,6 @@ export function loadRandomTask() {
 
             renderQuestion();
             renderAnswers();
-            console.log("Task nach loadRandomTask:", currentTask);
-
         } else {
             console.warn(`No tasks for "${mathTopic}" found.`);
             currentTask = null; // Set currentTask to null, if no task is found
@@ -83,22 +95,32 @@ function renderAnswers() {
     correctAnswer = currentTask.correct_answer;
     wrongAnswer1 = currentTask.wrong_answer1;
     wrongAnswer2 = currentTask.wrong_answer2;
-    wrongAnswer3 = currentTask.wrong_answer3;
 }
 
-// Initialize the player's square and squares for correct answer and wrong answers
-export function initializeSquaresArray() {
-    createPlayerSquareArrayCar();  // Add the player to the squares array
-    createAnswerSquaresTraffic();
-}
-
-export function createAnswerSquaresTraffic() {
+export function createAnswerSquares() {
+    answerSquares = [];
     createCorrectAnswerSquare();
-    createWrongAnswersSquareTraffic();
+
+    let maxTries = 10; // Max 10 tries to generate wrong answers
+    let tries = 0;
+
+    while (tries < maxTries) {
+        createWrongAnswersSquareTraffic();
+
+        // Check if all answer squares are in different lanes
+        let laneSet = new Set(answerSquares.map(sq => sq.x));
+        if (laneSet.size === answerSquares.length) {
+            break;
+        }
+
+        console.warn("Doppelte Lane erkannt! Neuer Versuch...");
+        answerSquares = [correctAnswerSquare]; // Keep correct answer, try again
+        tries++;
+    }
 }
 
 // Initialize player's square (car)
-function createPlayerSquareArrayCar() {
+export function createPlayerSquareArrayCar() {
     squarePlayerArrayCar = [
         new Square(
             lanes[1],
@@ -111,7 +133,7 @@ function createPlayerSquareArrayCar() {
             false,
             null,
             "",
-            true // Spielersegment
+            true // Segment for player
         ),
         new Square(
             lanes[1],
@@ -124,13 +146,13 @@ function createPlayerSquareArrayCar() {
             false,
             null,
             "",
-            true // Spielersegment
+            true // Segment for player
         )
     ];
 }
 
 // Create a new square for correct answer at a random position
-export function createCorrectAnswerSquare() {
+function createCorrectAnswerSquare() {
     const { x, y } = generateValidPositionTraffic();
 
     // Create new square for correct answer
@@ -148,20 +170,24 @@ export function createCorrectAnswerSquare() {
     );
 
     answerSquares.push(correctAnswerSquare);
-    console.log("ansSq after init creatCorAnsSq: ", answerSquares);
 }
 
-export function createWrongAnswersSquareTraffic() {
+function createWrongAnswersSquareTraffic() {
     let wrongAnswers = [];
 
-    // Überprüfe, ob das aktuelle Level eines der genannten Levels ist
-    if ([1, 4, 7].includes(currentStage)) {
-        wrongAnswers = [wrongAnswer1];
-    } else if ([2, 3, 5, 6, 8, 9].includes(currentStage)) {
-        wrongAnswers = [wrongAnswer1, wrongAnswer2];
+    switch (currentStage) {
+        case 1:
+            wrongAnswers = [wrongAnswer1];
+            break;
+        case 2:
+        case 0:
+            wrongAnswers = [wrongAnswer1, wrongAnswer2];
+            break;
+        default:
+            wrongAnswers = [];
     }
 
-    wrongAnswers.forEach((wrongAnswer, index) => {
+    wrongAnswers.forEach((wrongAnswer) => {
         const { x, y } = generateValidPositionTraffic();
 
         // Create new square for wrong answer
@@ -180,33 +206,32 @@ export function createWrongAnswersSquareTraffic() {
 
         // Add square of wrong answer to the squares array
         answerSquares.push(wrongAnswerSquare);
-        console.log("ansSq after init creatWrAnsSq: ", answerSquares);
     });
 }
 
 function generateValidPositionTraffic() {
-    let randomLaneIndex;
-    let x, y;
+    let availableLanes = lanes.filter(lane => !occupiedLanes.includes(lane));
 
-    do {
-        // Wähle eine zufällige Lane (0, 1 oder 2)
-        randomLaneIndex = Math.floor(Math.random() * lanes.length);
+    if (availableLanes.length === 0) {
+        console.warn("No available lanes! Resetting occupied lanes...");
+        occupiedLanes = []; // Clear all occupied lanes
+        availableLanes = [...lanes]; // Fill available lanes with all lanes
+    }
 
-        // Berechne die X-Position, die der Mitte der zufälligen Lane entspricht
-        x = lanes[randomLaneIndex];
+    if (availableLanes.length === 0) {
+        console.error("Fehler: Keine Lanes verfügbar!");
+        return { x: lanes[0], y: BORDER_MARGIN }; // Return first lane as fallback
+    }
 
-        // Setze die Y-Position am oberen Rand der Canvas
-        y = BORDER_MARGIN;
-    } while (occupiedLanes.includes(randomLaneIndex)); // Überprüfe, ob die Lane bereits besetzt ist
+    const randomLaneIndex = Math.floor(Math.random() * availableLanes.length);
+    const x = availableLanes[randomLaneIndex];
 
-    // Markiere die Lane als besetzt
-    occupiedLanes.push(randomLaneIndex);
+    occupiedLanes.push(x); // Save occupied lane
 
-    return { x, y };
+    return { x, y: BORDER_MARGIN };
 }
 
-
-export class Square {
+class Square {
     constructor(
         x,
         y,
@@ -246,8 +271,7 @@ export class Square {
         if (!this.emoji) {
             // Set the color dynamically based on square type
             if (this.player) {
-                if (squarePlayerArray.indexOf(this) !== 0) {
-                    console.log("Setting color to Orange");
+                if (squarePlayerArrayCar.indexOf(this) !== 0) {
                     ctx.fillStyle = getColorByName('Orange');
                 }
             } else {
@@ -267,6 +291,9 @@ export class Square {
         ctx.textBaseline = "middle";
         const textX = this.emoji ? this.x + this.width / 2 : this.x + 4;
         const textY = this.y + this.width / 2;
-        ctx.fillText(this.text || this.emoji, textX, textY);
+        // Only draw the emoji, not the text (since text is handled by KaTeX)
+        if (this.emoji) {
+            ctx.fillText(this.emoji, textX, textY);
+        }
     }
 }

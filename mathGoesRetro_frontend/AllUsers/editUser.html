@@ -1,5 +1,18 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Zain Aldin Zaher Alnaem
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!--
+  User profile page that allows users to view and edit their personal information.
+  Includes functionality for editing the username, password, email, and saving changes.
+  Also provides a cancel button to revert any changes made to the form.
+-->
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +21,9 @@
   <link rel="stylesheet" href="header.css">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
-      <!-- Include Header -->
+  <!-- Include Header -->
   <div id="header"></div>
   <div class="container">
     <h1 class="retro-title">User Profile</h1>
@@ -25,7 +39,7 @@
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password" readonly>
-    </div>
+      </div>
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" value="currentEmail@example.com" readonly>
@@ -49,4 +63,5 @@
       .catch(error => console.error('Error loading header:', error));
   </script>
 </body>
+
 </html>

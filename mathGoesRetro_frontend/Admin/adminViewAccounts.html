@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+
+<!--
+    Name: MathGoesRetro
+    Author: Gonçalo Oliveira Cardoso
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
+<!--
+    Admin View Accounts Page:
+    Displays user account details with filtering functionality by user ID.
+-->
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +22,7 @@
     <link rel="stylesheet" href="adminViewAccounts.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container">
@@ -43,7 +59,7 @@
             </div>
         </div>
 
-        <div class="tableContainer" >
+        <div class="tableContainer">
             <table id="userTable">
                 <thead>
                     <tr>
@@ -52,7 +68,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -99,11 +115,11 @@
             usersToRender.forEach(user => {
                 if (user.role == 'P' || user.role == 'H') {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
         }
@@ -122,11 +138,11 @@
                     viewUserType = user.role;
                     viewUserStatus = user.account_status;
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
             const rows = tableBody.getElementsByTagName('tr');
@@ -163,13 +179,14 @@
             }
         }
 
-    document.getElementById("viewButton").addEventListener('click', (e) => {
+        document.getElementById("viewButton").addEventListener('click', (e) => {
             e.preventDefault();
             viewUser();
         });
 
-    // Fetch users on page load
-    fetchUsers();
+        // Fetch users on page load
+        fetchUsers();
     </script>
 </body>
+
 </html>

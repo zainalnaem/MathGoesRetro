@@ -1,35 +1,50 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles user profile editing, including enabling editing mode, saving changes,
+ * canceling edits, and validating the input fields. Fetches the current user data 
+ * on page load and provides functionality for updating the user's profile, 
+ * including the password and email.
+ */
+
 function enableEditing() {
-    document.getElementById('username').readOnly = false;
-    document.getElementById('password').readOnly = false;
-    document.getElementById('email').readOnly = false;
-    document.getElementById('saveButton').disabled = false;
+  document.getElementById('username').readOnly = false;
+  document.getElementById('password').readOnly = false;
+  document.getElementById('email').readOnly = false;
+  document.getElementById('saveButton').disabled = false;
+}
+
+function saveChanges(event) {
+  event.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const email = document.getElementById('email').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  // Validate passwords match
+  if (password !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
   }
-  
-  function saveChanges(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-  }
 
 
-    console.log("Updated User Info:", { username, password, email });
-  
-    document.getElementById('username').readOnly = true;
-    document.getElementById('password').readOnly = true;
-    document.getElementById('confirmPassword').readOnly = true;
-    document.getElementById('email').readOnly = true;
-    document.getElementById('saveButton').disabled = true;
-  
-    alert("Changes saved successfully!");
-  }// Store original values to allow cancellation
-  let originalUsername, originalPassword, originalConfirmPassword, originalEmail;
+  console.log("Updated User Info:", { username, password, email });
+
+  document.getElementById('username').readOnly = true;
+  document.getElementById('password').readOnly = true;
+  document.getElementById('confirmPassword').readOnly = true;
+  document.getElementById('email').readOnly = true;
+  document.getElementById('saveButton').disabled = true;
+
+  alert("Changes saved successfully!");
+}// Store original values to allow cancellation
+let originalUsername, originalPassword, originalConfirmPassword, originalEmail;
 
 function enableEditing() {
   // Store the original values
@@ -54,14 +69,14 @@ function enableEditing() {
 async function saveChanges(event) {
   event.preventDefault();
   const userId = localStorage.getItem('user_id');
-   // Retrieve the role dynamically
-   let role = localStorage.getItem('selectedRole') || 'Player'; // Default to 'Player' if no role is set
+  // Retrieve the role dynamically
+  let role = localStorage.getItem('selectedRole') || 'Player'; // Default to 'Player' if no role is set
 
-   // Map role names to their codes
+  // Map role names to their codes
   if (role === 'player') {
-      role = 'P';
+    role = 'P';
   } else if (role === 'host') {
-      role = 'H';
+    role = 'H';
   }
 
 
@@ -141,7 +156,7 @@ function cancelEditing() {
   // Disable fields and buttons
   document.getElementById('username').readOnly = true;
   document.getElementById('password').readOnly = true;
-  document.getElementById('confirmPassword').readOnly = true  ;
+  document.getElementById('confirmPassword').readOnly = true;
   document.getElementById('email').readOnly = true;
   document.getElementById('saveButton').disabled = true;
   document.getElementById('cancelButton').disabled = true;
@@ -152,32 +167,32 @@ function cancelEditing() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const userId = localStorage.getItem('user_id');
-    fetchUserData(userId);
-  });
-  
-  async function fetchUserData(userId) {
-    try {
-      const response = await fetch(`http://localhost:3000/api/users/ ${userId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const user = await response.json();
-  
-      // Populate the fields with the fetched data 
-      document.getElementById('username').value = user.username;
-      document.getElementById('password').value = "";
-      document.getElementById('email').value = user.email;
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      alert("Failed to load user data.");
+  const userId = localStorage.getItem('user_id');
+  fetchUserData(userId);
+});
+
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/ ${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const user = await response.json();
+
+    // Populate the fields with the fetched data 
+    document.getElementById('username').value = user.username;
+    document.getElementById('password').value = "";
+    document.getElementById('email').value = user.email;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    alert("Failed to load user data.");
   }
-  
-     // Redirect if not logged in
-     const userId = localStorage.getItem('user_id');
-     if (!userId) {
-       alert("You must be logged in to access this page.");
-       window.location.href = 'index.html'; // Redirect to login page
-     }
+}
+
+// Redirect if not logged in
+const userId = localStorage.getItem('user_id');
+if (!userId) {
+  alert("You must be logged in to access this page.");
+  window.location.href = 'index.html'; // Redirect to login page
+}

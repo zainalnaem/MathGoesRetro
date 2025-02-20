@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles question submission and retrieval for the game,
+ * including form validation, backend communication, and user question management.
+ */
+
 document.getElementById('questionForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -50,7 +63,7 @@ document.getElementById('questionForm').addEventListener('submit', async (event)
                 topic: topicMapped,
                 difficulty: difficultyMapped,
                 points: 0,
-                status:'n',
+                status: 'n',
                 user_id
             }),
         });
@@ -127,7 +140,7 @@ async function fetchUserQuestions() {
     }
 }
 
-  // Redirect if not logged in
+// Redirect if not logged in
 const userId = localStorage.getItem('user_id');
 if (!userId) {
     alert("You must be logged in to access this page.");

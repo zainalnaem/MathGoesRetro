@@ -1,3 +1,19 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Melvyn Wilbert Tjandra, Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Fetches and displays the leaderboard rankings.
+ * - Retrieves top player scores from the API.
+ * - Dynamically populates the leaderboard table.
+ * - Handles errors with a user-friendly message.
+ * - Redirects users to login if not authenticated.
+ */
+
 document.addEventListener("DOMContentLoaded", async () => {
   const leaderboardBody = document.getElementById("leaderboard-body");
 

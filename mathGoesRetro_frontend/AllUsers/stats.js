@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Melvyn Wilbert Tjandra
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages tab navigation and loads user game statistics,
+ * including fetching highscores and game-specific stats dynamically.
+ */
+
 document.addEventListener("DOMContentLoaded", async () => {
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
@@ -93,9 +106,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     tabButtons[0].click();
 });
 
-  // Redirect if not logged in
-  const userId = localStorage.getItem('user_id');
-  if (!userId) {
+// Redirect if not logged in
+const userId = localStorage.getItem('user_id');
+if (!userId) {
     alert("You must be logged in to access this page.");
     window.location.href = 'index.html'; // Redirect to login page
-  }
+}

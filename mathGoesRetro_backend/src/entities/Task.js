@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles task-related operations such as creating, retrieving, updating task status, 
+ * and modifying task content in the database.
+ */
+
 const pool = require('../config/db');
 
 const Task = {
@@ -34,8 +47,23 @@ const Task = {
         }
 
         return result.rows[0];
-      }
+      },
 
-};  
+      async updateTaskContent(taskId, updatedTaskData) {
+        const { question, wrong_answer1, wrong_answer2, wrong_answer3, correct_answer } = updatedTaskData;
+    
+        const result = await pool.query(
+            `UPDATE "Task" SET question = $1, wrong_answer1 = $2, wrong_answer2 = $3, wrong_answer3 = $4, correct_answer = $5 WHERE task_id = $6 RETURNING *`,
+            [question, wrong_answer1, wrong_answer2, wrong_answer3, correct_answer, taskId]
+        );
+    
+        if (result.rows.length === 0) {
+            throw new Error('Task not found');
+        }
+    
+        return result.rows[0];
+    }
+
+};
 
 module.exports = Task;

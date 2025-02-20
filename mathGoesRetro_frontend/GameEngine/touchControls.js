@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Sets up touch and mouse event listeners for movement controls. 
+ * Handles directional input and visual feedback for control buttons.
+ */
+
 // Store references to the control buttons
 const controls = {
     UP: document.getElementById("up"),

@@ -1,117 +1,166 @@
+/*
+ * CSS for Admin Question Approvals page.
+ * Retro neon styling with responsive layout, search bar, inputs, and table.
+ */
+
 /* General body styling */
-body{
+body {
     margin: 0;
     padding: 0;
-    font-family: 'Press Start 2P', cursive; /* Retro font */
+    font-family: 'Press Start 2P', cursive;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1c1c1c; /* Dark background */
+    background-color: #1c1c1c;
+    min-height: 100vh;
 }
 
 /* Main container */
-.container{
+.container {
     text-align: center;
-    background: #111; /* Dark container */
-    padding: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    background: #111;
+    padding: 25px;
+    margin: 15px;
     border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); /* Glowing neon effect */
-    width: 320px; /* Mobile-friendly width */
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.7);
+    width: 85%;
+    max-width: 550px;
 }
 
 /* Logo styling */
-.logo{
-    width: 100px;
+.logo {
+    width: 90px;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 3px solid #00ffcc;
-    padding: 5px;
+    padding: 4px;
     background-color: #111;
-    box-shadow: 0 0 10px 2px #ff00ff;
+    box-shadow: 0 0 8px 2px #ff00ff;
 }
 
 /* Page title */
-.pageTitle{
-    font-size: 20px;
+.pageTitle {
+    font-size: 18px;
     color: #00ffcc;
-    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8);
-    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+}
+#accountLabelContainer label {
+    color: #ff00ff; /* Bright magenta */
+    font-size: 12px; /* Adjust size if needed */
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7); /* Optional glow effect */
 }
 
-#filterButton{
-    font-size: 16px;
+/* Search bar */
+#searchPlayerContainer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+#taskSearch {
+    padding: 8px;
+    font-size: 12px;
+    border: 2px solid #00ffcc;
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+}
+
+#taskSearch::placeholder {
+    color: #888;
+}
+
+#filterButton {
+    font-size: 12px;
     color: white;
     background-color: #9e21a4;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
 }
 
-#filterButton:hover{
+#filterButton:hover {
     background-color: #00ffcc;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 1);
 }
 
-#accountLabelContainer{
-    margin-top: 5%;
-    margin-bottom: 2%;
+/* Input fields styling */
+.userLabelContainer {
     display: flex;
-    align-items: left;
-    color: #ff00ff;
-}
-
-#userContainer{
-    font-size: 10px;
-    background-color: #000000;
-}
-
-.userLabelContainer{
-    display: flex;
-    align-items: left;
-}
-
-.userLabel{
-    margin-top:2%;
-    margin-left:2%;
-    margin-bottom:2%;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 12px;
     color: #00ffcc;
 }
 
-.tableContainer{
-    padding: 5%;
+.userLabelContainer label {
+    margin-bottom: 4px;
+}
+
+.userInput, textarea {
+    width: 90%;
+    padding: 6px;
+    font-size: 12px;
+    border: 2px solid #00ffcc;
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    transition: box-shadow 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.userInput:focus, textarea:focus {
+    box-shadow: 0 0 8px #00ffcc;
+    transform: scale(1.02);
+}
+
+textarea {
+    resize: none;
+    height: 70px;
+}
+
+/* Table styling */
+.tableContainer {
+    padding: 4%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-table{
+table {
     color: #ff00ff;
-    width: 30%;
+    width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 15px;
 }
-th, td{
-    padding: 10px;
+
+th, td {
+    padding: 8px;
     background-color: #222;
     font-family: 'Press Start 2P', cursive;
     border: 2px solid #ddd;
     text-align: center;
 }
 
-.blueButtons{
-    margin-top: 5%;
-    padding: 5px;
-    font-size: 12px;
+/* Buttons */
+.blueButtons {
+    margin-top: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
     color: white;
     background-color: #007bff;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.blueButtons:hover{
+.blueButtons:hover {
     background-color: #00ffcc;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 1);
 }

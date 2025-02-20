@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles the core logic for the Number Kruncher game, including game initialization, 
+ * the main loop, player controls, collision detection, scoring, and level progression.
+ */
+
 import { 
     canvas, BLOCK_SIZE, canvasWidth, canvasHeight, 
     innerWidth, innerHeight, questionDisplay, scoreDisplay, 
@@ -184,7 +197,7 @@ export let currentDifficulty = 1;
 export let counterCorrect = 0;
 let correctAnswersPerLevel = 3;
 
-// !! Should be feched from entity game later !!
+// !! Should be fetched from entity game later !!
 // c for complex, d for derivative, r for radiant
 export let mathTopic = "d"; // Default to derivative
 
@@ -192,7 +205,6 @@ export let mathTopic = "d"; // Default to derivative
 function getSelectedLevel() {
     const urlParams = new URLSearchParams(window.location.search);
     const level = parseInt(urlParams.get("level"), 10); // Get level from URL as an integer
-    console.log(`Selected Level: ${level}`);  // Log the retrieved level
     return isNaN(level) ? 1 : level; // Default to level 1 if not found or invalid
 }
 
@@ -404,7 +416,6 @@ function showLevelUpPopup() {
         levelUpPopup.classList.add("hidden");
         isGameRunning = true; // Resume the game loop
         requestAnimationFrame(gameLoop);
-        // You can add logic here to continue playing the same level
     };
 
     // Add event listener for home button to go to the home screen
@@ -532,7 +543,7 @@ function checkCorrectAnswerSquareCollision(kruncher) {
     if (kruncher.x === correctAnswerSquare.x && kruncher.y === correctAnswerSquare.y) {
         if (correctAnswerSquare.isCorrectAnswer) {
             score++;
-            if (score === 3) {
+            if (score === 5) {
             showLevelUpPopup(); // Show the popup when score reaches 3
             }
             counterCorrect++;

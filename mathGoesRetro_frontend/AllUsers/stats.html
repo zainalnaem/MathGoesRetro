@@ -1,5 +1,18 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Melvyn Wilbert Tjandra
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!--
+    User Stats Page - Displays game statistics for Math Mamba, Number Kruncher, 
+    and Traffic Math with tabbed navigation and dynamic score updates.
+-->
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +21,18 @@
   <link rel="stylesheet" href="stats.css">
   <link rel="stylesheet" href="../AllUsers/header.css"> <!-- Link the header CSS -->
 </head>
+
 <body>
-    <!-- Include Header -->
-    <div id="header"></div>
-    <div class="container">
+  <!-- Include Header -->
+  <div id="header"></div>
+  <div class="container">
     <div class="header">
       <h1>User Stats</h1>
     </div>
     <div class="tab-container">
-        <button class="tab-btn active" data-tab="game1" data-game="1">Math Mamba</button>
-        <button class="tab-btn" data-tab="game2" data-game="2">Number Kruncher</button>
-        <button class="tab-btn" data-tab="game3" data-game="3">Traffic Math</button>
+      <button class="tab-btn active" data-tab="game1" data-game="1">Math Mamba</button>
+      <button class="tab-btn" data-tab="game2" data-game="2">Number Kruncher</button>
+      <button class="tab-btn" data-tab="game3" data-game="3">Traffic Math</button>
     </div>
     <div class="tab-content active" id="game1">
       <h2>Math Mamba</h2>
@@ -113,8 +127,9 @@
       .catch(error => console.error('Error loading header:', error));
   </script>
 
-  
+
 
   <script src="stats.js"></script>
 </body>
+
 </html>

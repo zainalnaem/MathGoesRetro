@@ -1,9 +1,24 @@
+<!-- 
+    Name: MathGoesRetro
+    Author: Paul Schöpfer
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
 <!DOCTYPE html>
+<!--
+    Traffic Math Game layout with canvas, UI elements, controls, 
+    and KaTeX for rendering math equations.
+-->
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/mathGoesRetro_frontend/AllUsers/header.css">
+    <link rel="icon" type="image/x-icon" href="/Images/favicon.ico">
     <style>
         @font-face {
             font-family: 'ComputerPixel';
@@ -30,22 +45,24 @@
             border: 2px solid #7ABFC7;
             display: block;
             margin: 0 auto;
+            /* Adjust top margin */
+            margin-top: 100px;
             background: #151515;
             touch-action: none;
             box-shadow: 0 0 4px #7ABFC7;
             /* Glow effect */
         }
 
-        .question, .answer {
+        .question {
             position: fixed;
-            top: 20px;
+            top: 75px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 40px;
-            font-style: normal;
-            font-family: 'ComputerPixel', monospace; /* Schriftart */
+            font-size: 150%;
+            font-family: 'ComputerPixel', monospace;
             color: #7ABFC7;
-            text-shadow: 0 0 4px #7ABFC7; /* Glow effect */
+            text-shadow: 0 0 4px #7ABFC7;
+            /* Glow effect */
         }
 
         .score {
@@ -59,6 +76,88 @@
             color: #7ABFC7;
             text-shadow: 0 0 4px #7ABFC7;
             /* Glow effect */
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            font-size: 30px;
+            background: rgba(34, 34, 34, 0.8);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 255, 0, 0.6);
+            /* Neon green shadow */
+            color: #ff3305;
+            /* Neon green text */
+            font-family: 'Press Start 2P';
+            /* Retro-style font */
+            width: 60%;
+            /* Adjust width to make it smaller */
+            max-width: 500px;
+            /* Max width to prevent it from getting too large */
+            min-width: 300px;
+            /* Optional: ensures it doesn't get too small */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .popup-content button {
+            background: #000;
+            /* Black background for contrast */
+            color: #00ff00;
+            /* Neon green text color */
+            font-family: 'Press Start 2P';
+            /* Retro font */
+            font-size: 18px;
+            /* Adjust font size */
+            padding: 10px 20px;
+            /* Button padding */
+            border: 2px solid #00ff00;
+            /* Neon green border */
+            border-radius: 8px;
+            /* Rounded corners */
+            text-transform: uppercase;
+            /* Capitalize button text */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            margin: 10px;
+            /* Spacing between buttons */
+            transition: 0.3s ease;
+            /* Smooth hover effect */
+            box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.6);
+            /* Neon glow */
+        }
+
+        .popup-content button:hover {
+            background: #00ff00;
+            /* Neon green background on hover */
+            color: #000;
+            /* Black text on hover */
+            box-shadow: 0 0 20px 4px rgba(0, 255, 0, 1);
+            /* Stronger glow on hover */
+            transform: scale(1.1);
+            /* Slightly enlarge on hover */
+        }
+
+        .popup-content button:active {
+            transform: scale(1);
+            /* Reset scale when pressed */
+            box-shadow: 0 0 5px 1px rgba(0, 255, 0, 0.6);
+            /* Subtle glow on press */
         }
 
         .invisible-control {
@@ -113,11 +212,14 @@
 </head>
 
 <body>
+    <!-- Include Header -->
+    <div id="header"></div>
+
     <!-- Canvas displaying the game -->
     <canvas id="canvasTrafficMath" tabindex="0" width="516" height="516"></canvas>
 
     <!-- Question -->
-    <div style="font-size: 24px;" class="question"></div>
+    <div class="question"></div>
 
     <!-- Game score -->
     <div class="score">Score: 0</div>
@@ -133,6 +235,23 @@
         </div>
         <div class="vertical-controls">
             <button id="down" class="control-button invisible-control">↓</button>
+        </div>
+    </div>
+
+    <div id="gameOverPopup" class="popup hidden">
+        <div class="popup-content">
+            <h2>GAME OVER</h2>
+            <button id="restartButton">Restart</button>
+            <button id="homeButton">Back</button>
+        </div>
+    </div>
+
+    <div id="levelUpPopup" class="popup hidden">
+        <div class="popup-content">
+            <h1>Congrats!</h1>
+            <p>You unlocked the next level!</p>
+            <button id="continueButton">Continue Playing</button>
+            <button id="homeButton1">Next Level</button>
         </div>
     </div>
 
@@ -155,13 +274,13 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-        // Prevent default scrolling behavior for arrow keys
-        document.addEventListener("keydown", function (event) {
-            const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
-            if (keysToPrevent.includes(event.key)) {
-                event.preventDefault();
-            }
-        });
+            // Prevent default scrolling behavior for arrow keys
+            document.addEventListener("keydown", function (event) {
+                const keysToPrevent = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+                if (keysToPrevent.includes(event.key)) {
+                    event.preventDefault();
+                }
+            });
 
             renderMathInElement(document.body, {
                 delimiters: [
@@ -171,6 +290,16 @@
                 throwOnError: false
             });
         });
+    </script>
+    <script src="../AllUsers/header.js"></script> <!-- Include header JS -->
+    <script>
+        // Load Header
+        fetch('../AllUsers/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
     </script>
 </body>
 

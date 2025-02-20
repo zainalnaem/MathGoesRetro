@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+
+<!--
+    Name: MathGoesRetro
+    Author: Gonçalo Oliveira Cardoso
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
+<!--
+    Admin Delete Player Page for MathGoesRetro.
+    Allows admins to search for a player by ID and delete the corresponding profile.
+-->
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +22,7 @@
     <link rel="stylesheet" href="adminDeletePlayer.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container">
@@ -22,7 +38,7 @@
             </button>
         </div>
 
-        <div class="tableContainer" >
+        <div class="tableContainer">
             <table id="playerTable">
                 <thead>
                     <tr>
@@ -31,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -72,11 +88,11 @@
             usersToRender.forEach(user => {
                 if (user.role == 'P') {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
         }
@@ -90,11 +106,11 @@
             usersToRender.forEach(user => {
                 if (user.role == 'P' && user.user_id == userId) {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${user.user_id}</td>
                     <td>${user.username}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
             const rows = tableBody.getElementsByTagName('tr');
@@ -121,36 +137,37 @@
 
             try {
                 const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                'Content-Type': 'application/json',
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) { // Check if the response status is 200-299
+                    const result = await response.json();
+                    alert("Player profile deleted successfully.");
+
+                    // Refresh the user table
+                    fetchUsers();
+                } else {
+                    const result = await response.json(); // Parse the error message
+                    alert(result.message || "Failed to delete the player profile."); // Show backend error if available
+                }
+            } catch (error) {
+                console.error("Error deleting player profile:", error);
+                alert("An error occurred while deleting the player profile.");
             }
-        });
-
-        if (response.ok) { // Check if the response status is 200-299
-            const result = await response.json();
-            alert("Player profile deleted successfully.");
-
-            // Refresh the user table
-            fetchUsers();
-        } else {
-            const result = await response.json(); // Parse the error message
-            alert(result.message || "Failed to delete the player profile."); // Show backend error if available
         }
-    } catch (error) {
-        console.error("Error deleting player profile:", error);
-        alert("An error occurred while deleting the player profile.");
-    }
-}
 
 
-    document.getElementById("deleteButton").addEventListener('click', (e) => {
+        document.getElementById("deleteButton").addEventListener('click', (e) => {
             e.preventDefault();
             deletePlayer();
         });
 
-    // Fetch users on page load
-    fetchUsers();
+        // Fetch users on page load
+        fetchUsers();
     </script>
 </body>
+
 </html>

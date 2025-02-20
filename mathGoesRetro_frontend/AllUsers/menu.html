@@ -1,5 +1,16 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Zain Aldin Zaher Alnaem
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!-- Game selection menu for MathGoesRetro.
+    Users can choose between different math-based games: Math Mamba, Number Kruncher, and Traffic Math. -->
+
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +18,7 @@
   <link rel="stylesheet" href="menu.css">
   <link rel="stylesheet" href="header.css">
 </head>
+
 <body>
   <!-- Include Header -->
   <div id="header"></div>
@@ -17,7 +29,7 @@
           <div class="game-button">
             <img src="../Images/MathMamba.png" alt="MathMamba" />
           </div>
-        </a>  
+        </a>
         <a href="levelSelect2.html" class="link-button">
           <div class="game-button">
             <img src="../Images/NumberKruncher.png" alt="NumberKruncher" />
@@ -35,13 +47,13 @@
 
   <script src="header.js"></script> <!-- Include header JS -->
   <script>
-      // Redirect if not logged in
-      const userId = localStorage.getItem('user_id');
+    // Redirect if not logged in
+    const userId = localStorage.getItem('user_id');
     if (!userId) {
       alert("You must be logged in to access this page.");
       window.location.href = 'index.html'; // Redirect to login page
     }
-    
+
     // Load Header
     fetch('header.html')
       .then(response => response.text())
@@ -51,4 +63,5 @@
       .catch(error => console.error('Error loading header:', error));
   </script>
 </body>
+
 </html>

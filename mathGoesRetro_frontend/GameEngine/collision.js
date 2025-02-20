@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages collision notifications, including displaying, fading, 
+ * and detecting collisions between game elements.
+ */
+
 // `collisionMessage`-object for managing collisions by notifications
 export const collisionMessage = {
     show: false, // If message is shown

@@ -1,4 +1,16 @@
-// Global attributes, game settings
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Defines global game settings and canvas properties, 
+ * including block size, margins, dimensions, and UI elements
+ * for the Number Kruncher game.
+ */
 
 export const BLOCK_SIZE = 30;   // Size of the box (snake and food)
 export const BORDER_MARGIN = 3; // Margin from edge for squares

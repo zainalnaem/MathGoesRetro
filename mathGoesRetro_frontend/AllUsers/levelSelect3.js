@@ -1,3 +1,17 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Melvyn Wilbert Tjandra
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Manages level selection for the Traffic Math game.
+ * Fetches user progress, high scores, and dynamically generates levels.
+ * Redirects users to the correct game level or displays a lock message.
+ */
+
 document.addEventListener("DOMContentLoaded", async () => {
     const totalScoreElement = document.getElementById("totalScore");
 
@@ -25,41 +39,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Dynamically generate levels based on levelNum
     generateLevels(levelNum, highscores, max_level);
-
-    // // Fetch user_highscore for a specific user and game ID by filtering in frontend
-    // async function fetchHighscores(userId, gameId) {
-    //     try {
-    //         const response = await fetch(`http://localhost:3000/api/gameStats/`);
-    //         if (!response.ok) {
-    //             throw new Error("Failed to fetch game stats");
-    //         }
-    //         const gameStats = await response.json();
-    
-    //         // Log all game stats for debugging
-    //         console.log("Fetched gameStats:", gameStats);
-    
-    //         // Filter for the specific user and game ID
-    //         const filteredStats = gameStats.find(
-    //             (stat) => parseInt(stat.user_id) === parseInt(userId) &&
-    //                       parseInt(stat.game_id) === parseInt(gameId)
-    //         );
-    
-    //         // Parse user_highscore field
-    //         const highscores = filteredStats.user_highscore
-    //             .split(",")
-    //             .map((score, index) => ({
-    //                 level: index + 1,
-    //                 score: parseInt(score.trim(), 10) || 0,
-    //             }));
-    
-    //         console.log("Parsed highscores:", highscores);
-    //         return highscores;
-    //     } catch (error) {
-    //         console.error("Error fetching highscores:", error.message);
-    //         return [];
-    //     }
-    // }    
-
 
     // Fetch user_highscore for a specific user and game ID
     async function fetchHighscores(userId, gameId) {
@@ -166,9 +145,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-  // Redirect if not logged in
-  const userId = localStorage.getItem('user_id');
-  if (!userId) {
+// Redirect if not logged in
+const userId = localStorage.getItem('user_id');
+if (!userId) {
     alert("You must be logged in to access this page.");
     window.location.href = 'index.html'; // Redirect to login page
-  }
+}

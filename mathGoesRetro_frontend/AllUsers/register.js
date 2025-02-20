@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles user registration by submitting form data to the backend,
+ * creating user accounts, initializing game stats, and redirecting to login on success.
+ */
+
 document.getElementById('registerForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -23,8 +36,8 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
         role = 'H';
     }
 
-     // Set account_status based on role
-     const account_status = role === 'H' ? 'd' : 'a';
+    // Set account_status based on role
+    const account_status = role === 'H' ? 'd' : 'a';
 
     try {
         // Send data to backend to register the user
@@ -60,7 +73,7 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
                     },
                     body: JSON.stringify({
                         user_highscore: '0', // Initial highscore
-                        max_level: 1,
+                        max_level: role === 'H' ? 9 : 1, // Unlock all levels for 'Host'
                         correct_answers: '0', // Initial correct answers
                         multiplier: 2.0,
                         user_id: userId, // Use the created user ID

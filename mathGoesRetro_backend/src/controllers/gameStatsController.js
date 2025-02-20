@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Melvyn Wilbert Tjandra
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Controller for handling game statistics-related requests, including fetching, 
+ * creating, updating game stats, retrieving high scores, and generating the leaderboard.
+ */
+
 const GameStats = require('../entities/GameStats');
 const pool = require('../config/db');
 
@@ -31,8 +44,8 @@ exports.updateGameStats = async (req, res) => {
         // Fetch current GameStats and Game data
         const gameStatsResult = await pool.query(
             `SELECT user_highscore, correct_answers, max_level 
-             FROM "GameStats" 
-             WHERE user_id = $1 AND game_id = $2`,
+            FROM "GameStats" 
+            WHERE user_id = $1 AND game_id = $2`,
             [userId, gameId]
         );
 

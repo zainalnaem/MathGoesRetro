@@ -1,15 +1,28 @@
 <!DOCTYPE html>
+<!--
+    Name: MathGoesRetro
+    Author: Zain Aldin Zaher Alnaem
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+<!--
+    Renders the top navigation bar with menu button, home button, and leaderboard button. 
+    Also renders the side menu with options for stats, editing profile, submitting questions, logging out, and deleting profile.
+-->
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Header</title>
-  
+
   <link rel="stylesheet" href="header.css">
-   <!-- Add Font Awesome for icons -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Add Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 </head>
+
 <body>
   <!-- Top Bar -->
   <div class="top-bar">
@@ -24,11 +37,12 @@
   <!-- Side Menu -->
   <div class="side-menu" id="sideMenu">
     <button class="menu-item" onclick="stats()">Stats</button>
-    <button class="menu-item"  onclick="editProfile()">Edit Profile</button>
+    <button class="menu-item" onclick="editProfile()">Edit Profile</button>
     <button class="menu-item" type="button" id="submitQuestion" onclick="submitQuestion()">Submit Question</button>
     <button class="menu-item" onclick="logout()">Logout</button>
-    <button class="menu-item delete"  onclick="deleteProfile()">Delete Profile</button>
+    <button class="menu-item delete" onclick="deleteProfile()">Delete Profile</button>
   </div>
   <script src="/mathGoesRetro_frontend/AllUsers/header.js"></script>
 </body>
+
 </html>

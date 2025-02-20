@@ -1,7 +1,19 @@
-// Provides the typical C64 color palette for use in games or other applications.
+/**
+ * Name: MathGoesRetro
+ * Author: Paul Schöpfer
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Provides the C64 color palette with functions to retrieve 
+ * specific, all, or random colors for game elements.
+ */
 
 // C64 Color Palette: These are hexadecimal representations of the original C64 colors.
 const C64_COLORS = {
+    // preferred ones:
     Black: '#000000',
     White: '#FFFFFF',
     Aqua: '#7ABFC7',
@@ -14,6 +26,7 @@ const C64_COLORS = {
     Apricot: '#894036',
     Green: '#68A941',
 
+    // additional ones:
     Blue: '#0000D4',
     Yellow: '#D4D400',
     Orange: '#D46000',

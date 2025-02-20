@@ -1,0 +1,19 @@
+buzz-grid-sounds-wav (crash.wav, ding2.wav, thunk.wav)
+by claudeb
+licensed: PUBLIC DOMAIN CC0
+https://opengameart.org/content/buzz-grid-sounds
+
+8-Bit Car Game Sound Effects.zip (FillingTheTank.wav, ReplacedTheEngine.wav)
+by Snabisch
+licensed: CC-BY 3.0
+https://opengameart.org/content/pack-8-bit-car-game-sound-effects
+
+loop_0.wav
+by domasx2
+licensed: PUBLIC DOMAIN CC0
+https://opengameart.org/content/racing-car-engine-sound-loops
+
+Misc Lasers.zip (Game_Over.wav)
+by Muncheybobo
+licensed: PUBLIC DOMAIN CC0
+https://opengameart.org/content/retro-shooter-sound-effects

@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+
+<!--
+    Name: MathGoesRetro
+    Author: Gonçalo Oliveira Cardoso
+    Version: 0.1
+    License: GPLv3
+    Date: 20.02.2025
+-->
+
+<!--
+    Admin Question Approvals Page:
+    Displays pending question requests and allows admins to update or approve them.
+-->
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +22,7 @@
     <link rel="stylesheet" href="adminQuestionApprovals.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container">
@@ -27,32 +43,40 @@
         </div>
         <div id="userContainer">
             <div class="userLabelContainer">
-                <label id="taskIdLabel" class="userLabel"> Task ID: </label>
+                <label> Task ID: </label>
+                <input type="text" id="taskIdInput" class="userInput" readonly>
             </div>
             <div class="userLabelContainer">
-                <label id="questionLabel" class="userLabel"> Question: </label>
+                <label> Question: </label>
+                <textarea id="questionInput" class="userInput"></textarea>
             </div>
             <div class="userLabelContainer">
-                <label id="taskWrongOneLabel" class="userLabel"> Wrong Answer 1: </label>
+                <label> Wrong Answer 1: </label>
+                <input type="text" id="taskWrongOneInput" class="userInput">
             </div>
             <div class="userLabelContainer">
-                <label id="taskWrongTwoLabel" class="userLabel"> Wrong Answer 2: </label>
+                <label> Wrong Answer 2: </label>
+                <input type="text" id="taskWrongTwoInput" class="userInput">
             </div>
             <div class="userLabelContainer">
-                <label id="taskWrongThreeLabel" class="userLabel"> Wrong Answer 3: </label>
+                <label> Wrong Answer 3: </label>
+                <input type="text" id="taskWrongThreeInput" class="userInput">
             </div>
             <div class="userLabelContainer">
-                <label id="taskAnswerLabel" class="userLabel"> Correct Answer: </label>
+                <label> Correct Answer: </label>
+                <input type="text" id="taskAnswerInput" class="userInput">
             </div>
             <div class="userLabelContainer">
-                <label id="taskTopicLabel" class="userLabel"> Topic: </label>
+                <label> Topic: </label>
+                <input type="text" id="taskTopicInput" class="userInput">
             </div>
             <div class="userLabelContainer">
-                <label id="taskDifficultyLabel" class="userLabel"> Difficulty: </label>
+                <label> Difficulty: </label>
+                <input type="text" id="taskDifficultyInput" class="userInput">
             </div>
         </div>
 
-        <div class="tableContainer" >
+        <div class="tableContainer">
             <table id="taskTable">
                 <thead>
                     <tr>
@@ -61,12 +85,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
 
         <div class="adminLowerButtonGroup">
+            <button id="saveChangesButton" class="blueButtons">
+                Update Task
+            </button>
             <button id="approveButton" class="blueButtons">
                 Approve
             </button>
@@ -111,53 +138,31 @@
             tasksToRender.forEach(task => {
                 if (task.status == 'n') {
                     const row = document.createElement('tr');
-                row.innerHTML = `
+                    row.innerHTML = `
                     <td>${task.task_id}</td>
                     <td>${task.topic}</td>
                 `;
-                tableBody.appendChild(row);
+                    tableBody.appendChild(row);
                 }
             });
         }
 
         // Render only filtered users
         function renderFilteredTasks(tasksToRender) {
-            taskId = Number(document.getElementById("taskSearch").value);
-            const tableBody = document.getElementById('taskTable').querySelector('tbody');
-            tableBody.innerHTML = ''; // Clear table
+            const taskId = Number(document.getElementById("taskSearch").value);
+            const task = tasksToRender.find(t => t.task_id === taskId && t.status === 'n');
 
-            tasksToRender.forEach(task => {
-                if ((task.task_id == taskId) && task.status == 'n') {
-                    viewTaskID = task.task_id;
-                    viewQuestion = task.question;
-                    viewWrongOne = task.wrong_answer1;
-                    viewWrongTwo = task.wrong_answer2;
-                    viewWrongThree = task.wrong_answer3;
-                    viewCorrectAnswer = task.correct_answer;
-                    viewTopic = task.topic;
-                    viewDifficulty = task.difficulty;
-                    const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${task.task_id}</td>
-                    <td>${task.topic}</td>
-                `;
-                tableBody.appendChild(row);
-                }
-            });
-            const rows = tableBody.getElementsByTagName('tr');
-            const rowCount = rows.length;
-
-            document.getElementById("taskIdLabel").innerHTML = "Task ID:"
-            document.getElementById("questionLabel").innerHTML = "Question:";
-            document.getElementById("taskWrongOneLabel").innerHTML = "Wrong Answer 1:";
-            document.getElementById("taskWrongTwoLabel").innerHTML = "Wrong Answer 2:";
-            document.getElementById("taskWrongThreeLabel").innerHTML = "Wrong Answer 3:";
-            document.getElementById("taskAnswerLabel").innerHTML = "Correct Answer:";
-            document.getElementById("taskTopicLabel").innerHTML = "Topic:";
-            document.getElementById("taskDifficultyLabel").innerHTML = "Difficulty:";
-
-            if (rowCount == 0) {
-                fetchTasks();
+            if (task) {
+                document.getElementById("taskIdInput").value = task.task_id;
+                document.getElementById("questionInput").value = task.question;
+                document.getElementById("taskWrongOneInput").value = task.wrong_answer1;
+                document.getElementById("taskWrongTwoInput").value = task.wrong_answer2;
+                document.getElementById("taskWrongThreeInput").value = task.wrong_answer3;
+                document.getElementById("taskAnswerInput").value = task.correct_answer;
+                document.getElementById("taskTopicInput").value = task.topic;
+                document.getElementById("taskDifficultyInput").value = task.difficulty;
+            } else {
+                alert("No task found with this ID.");
             }
         }
 
@@ -181,51 +186,110 @@
         });
 
         async function approveQuestion() {
-            const questionId = Number(document.getElementById("taskSearch").value);
+            const questionId = Number(document.getElementById("taskIdInput").value);
+            const updatedQuestion = document.getElementById("questionInput").value;
+            const updatedWrongOne = document.getElementById("taskWrongOneInput").value;
+            const updatedWrongTwo = document.getElementById("taskWrongTwoInput").value;
+            const updatedWrongThree = document.getElementById("taskWrongThreeInput").value;
+            const updatedCorrectAnswer = document.getElementById("taskAnswerInput").value;
+            const updatedTopic = document.getElementById("taskTopicInput").value;
+            const updatedDifficulty = document.getElementById("taskDifficultyInput").value;
 
-            // Show a confirmation dialog
+            // Confirm approval
             const isConfirmed = window.confirm("Are you sure you want to approve this question?");
-
-            if (!isConfirmed) {
-                return; // If the admin cancels, exit the function
-            }
+            if (!isConfirmed) return;
 
             const updatedData = {
-                status : "a"
+                status: "a",
+                question: updatedQuestion,
+                wrong_answer1: updatedWrongOne,
+                wrong_answer2: updatedWrongTwo,
+                wrong_answer3: updatedWrongThree,
+                correct_answer: updatedCorrectAnswer,
+                topic: updatedTopic,
+                difficulty: updatedDifficulty
             };
 
             try {
                 const response = await fetch(`http://localhost:3000/api/tasks/approve/${questionId}`, {
-                method: 'PUT',
-                headers: {
-                'Content-Type': 'application/json'},
-                body: JSON.stringify(updatedData),
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData),
+                });
+
+                if (response.ok) {
+                    alert("Question approved and updated successfully.");
+                    fetchTasks(); // Refresh the task list
+                } else {
+                    const result = await response.json();
+                    alert(result.message || "Failed to approve the question");
+                }
+            } catch (error) {
+                console.error("Error approving question:", error);
+                alert("An error occurred while approving the question.");
+            }
+        }
+
+        async function saveTaskChanges() {
+            const questionId = Number(document.getElementById("taskIdInput").value);
+            const updatedQuestion = document.getElementById("questionInput").value;
+            const updatedWrongOne = document.getElementById("taskWrongOneInput").value;
+            const updatedWrongTwo = document.getElementById("taskWrongTwoInput").value;
+            const updatedWrongThree = document.getElementById("taskWrongThreeInput").value;
+            const updatedCorrectAnswer = document.getElementById("taskAnswerInput").value;
+            const updatedTopic = document.getElementById("taskTopicInput").value;
+            const updatedDifficulty = document.getElementById("taskDifficultyInput").value;
+
+            if (!questionId) {
+                alert("No task selected to update.");
+                return;
+            }
+
+            const updatedData = {
+                question: updatedQuestion,
+                wrong_answer1: updatedWrongOne,
+                wrong_answer2: updatedWrongTwo,
+                wrong_answer3: updatedWrongThree,
+                correct_answer: updatedCorrectAnswer,
+                topic: updatedTopic,
+                difficulty: updatedDifficulty
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/tasks/edit/${questionId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData),
+                });
+
+                if (response.ok) {
+                    alert("Task updated successfully.");
+                    fetchTasks(); // Refresh the task list
+                } else {
+                    const result = await response.json();
+                    alert(result.message || "Failed to update the task");
+                }
+            } catch (error) {
+                console.error("Error updating task:", error);
+                alert("An error occurred while updating the task.");
+            }
+        }
+
+        // Attach event listener to the new button
+        document.getElementById("saveChangesButton").addEventListener('click', (e) => {
+            e.preventDefault();
+            saveTaskChanges();
         });
 
-        if (response.ok) { // Check if the response status is 200-299
-            const result = await response.json();
-            alert("Question approved successfully.");
 
-            // Refresh the user table
-            fetchTasks();
-        } else {
-            const result = await response.json(); // Parse the error message
-            alert(result.message || "Failed to approve the question"); // Show backend error if available
-        }
-    } catch (error) {
-        console.error("Error approving question:", error);
-        alert("An error occurred while approving the question.");
-    }
-}
-
-
-    document.getElementById("approveButton").addEventListener('click', (e) => {
+        document.getElementById("approveButton").addEventListener('click', (e) => {
             e.preventDefault();
             approveQuestion();
         });
 
-    // Fetch tasks on page load
-    fetchTasks();
+        // Fetch tasks on page load
+        fetchTasks();
     </script>
 </body>
+
 </html>

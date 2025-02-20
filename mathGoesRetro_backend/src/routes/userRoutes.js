@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Handles user-related requests, including registration, login, retrieval, updates, deletions,
+ * account management, and password reset functionality.
+ */
+
 const express = require('express');
 const userController = require('../controllers/userController');
 const router = express.Router();

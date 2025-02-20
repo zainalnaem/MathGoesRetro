@@ -1,3 +1,12 @@
+/*
+  CSS for the Leaderboard page:
+  - Reset for consistent layout.
+  - Header with styling for background and positioning.
+  - Responsive container for leaderboard with retro design.
+  - Styles for table and cells with color and layout adjustments.
+  - Fully responsive down to 480px.
+*/
+
 /* General Reset */
 body {
   margin: 0;

@@ -1,3 +1,15 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Toggles the visibility of the side menu.
+ * Opens the menu if it’s closed, and closes it if it’s open.
+ */
 
 function toggleMenu() {
     const sideMenu = document.getElementById('sideMenu');

@@ -1,3 +1,16 @@
+/**
+ * Name: MathGoesRetro
+ * Author: Zain Aldin Zaher Alnaem
+ * Version: 0.1
+ * License: GPLv3
+ * Date: 20.02.2025
+ */
+
+/**
+ * Controller for handling user-related requests, including fetching, creating, updating, 
+ * deleting users, login authentication, account status updates, and password reset functionality.
+ */
+
 const User = require('../entities/User');
 
 // GET all users
