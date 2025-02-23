@@ -21,7 +21,7 @@ function toggleMenu() {
   }
   
   function goHome() {
-    window.location.href = '/mathGoesRetro_frontend/AllUsers/menu.html';
+    window.location.href = '../AllUsers/menu.html';
   }
 
   function submitQuestion() {
@@ -37,11 +37,11 @@ function toggleMenu() {
   }
 
   function viewLeaderboard() {
-    window.location.href = '/mathGoesRetro_frontend/AllUsers/leaderboard.html';
+    window.location.href = '../AllUsers/leaderboard.html';
   }
   
   function stats() {
-    window.location.href = '/mathGoesRetro_frontend/AllUsers/stats.html';
+    window.location.href = '../AllUsers/stats.html';
   }
 
   function logout() {
@@ -57,11 +57,11 @@ if ('serviceWorker' in navigator) {
 }
 
 
-    window.location.href = '/mathGoesRetro_frontend/AllUsers/index.html';
+    window.location.href = '../AllUsers/index.html';
   }
 
   function editProfile() {
-    window.location.href = '/mathGoesRetro_frontend/AllUsers/editUser.html';
+    window.location.href = '../AllUsers/editUser.html';
   }
 
   async function deleteProfile() {
@@ -93,7 +93,7 @@ if ('serviceWorker' in navigator) {
         if (result.success || result.message === "User deleted successfully") {
           alert("User profile deleted successfully.");
           // Optionally redirect the user to another page or log them out
-          window.location.href = '/mathGoesRetro_frontend/AllUsers/login.html'; // Redirecting to login page
+          window.location.href = '../AllUsers/login.html'; // Redirecting to login page
         } else {
           alert("Failed to delete the user profile.");
         }

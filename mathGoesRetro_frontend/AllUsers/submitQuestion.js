@@ -87,7 +87,7 @@ document.getElementById('questionForm').addEventListener('submit', async (event)
 });
 
 function cancelForm() {
-    window.location.href = 'menu.html'; // Redirect to the main menu
+    window.location.href = '../AllUsers/menu.html'; // Redirect to the main menu
 }
 
 async function fetchUserQuestions() {
@@ -95,7 +95,7 @@ async function fetchUserQuestions() {
 
     if (!userId) {
         alert("You must be logged in to view your questions.");
-        window.location.href = 'index.html'; // Redirect to login
+        window.location.href = '../AllUsers/index.html'; // Redirect to login
         return;
     }
 
@@ -144,5 +144,5 @@ async function fetchUserQuestions() {
 const userId = localStorage.getItem('user_id');
 if (!userId) {
     alert("You must be logged in to access this page.");
-    window.location.href = 'index.html'; // Redirect to login page
+    window.location.href = '../AllUsers/index.html'; // Redirect to login page
 }

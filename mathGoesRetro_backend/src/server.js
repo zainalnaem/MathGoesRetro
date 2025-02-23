@@ -15,6 +15,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const gameStatsRoutes = require('../src/routes/gameStatsRoutes');
@@ -26,6 +28,7 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
+app.use(cors({ origin: '*' })); // Allow all origins
 
 const PORT = process.env.PORT || 3000;
 
@@ -34,6 +37,14 @@ app.use(express.json());
 
 // Routes
 app.use('/api', userRoutes, taskRoutes, gameStatsRoutes, gameRoutes);
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../../mathGoesRetro_frontend')));
+
+// Serve index.html for all unknown routes (SPA support)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../mathGoesRetro_frontend/AllUsers/index.html'));
+});
 
 // Start Server
 app.listen(PORT, () => {

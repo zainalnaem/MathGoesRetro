@@ -83,7 +83,7 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
             }
 
             // Redirect to login page
-            window.location.href = 'login.html';
+            window.location.href = '../AllUsers/login.html';
         } else {
             // Backend returned an error
             alert(userResult.message || 'Registration failed');

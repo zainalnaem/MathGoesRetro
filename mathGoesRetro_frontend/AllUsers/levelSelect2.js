@@ -148,5 +148,5 @@ document.addEventListener("DOMContentLoaded", async () => {
 const userId = localStorage.getItem('user_id');
 if (!userId) {
     alert("You must be logged in to access this page.");
-    window.location.href = 'index.html'; // Redirect to login page
+    window.location.href = '../AllUsers/index.html'; // Redirect to login page
 }
