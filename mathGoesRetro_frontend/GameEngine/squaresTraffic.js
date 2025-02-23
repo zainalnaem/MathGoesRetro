@@ -8,165 +8,145 @@
 
 /**
  * Manages game objects and task handling for the Traffic Math game.
- * Handles fetching and loading tasks, generating answer squares, 
+ * Handles fetching and loading tasks, generating answer squares,
  * and defining the Square class for rendering game elements.
  */
 
+import { BORDER_MARGIN, BLOCK_SIZE } from "./globals.js";
+import { getColorByName } from "./c64Colors.js";
+import { canvasHeight, lanes, currentStage } from "./mainTrafficMath.js";
 
-import { BORDER_MARGIN, BLOCK_SIZE } from './globals.js';
-import { getColorByName } from './c64Colors.js';
-import {
-    canvasHeight, lanes, currentStage
-} from './mainTrafficMath.js';
-
-export let squarePlayerArrayCar = [];       // Will be used for player's body later, e.g. the car
+export let squarePlayerArrayCar = []; // Will be used for player's body later (the car)
 
 // Simulate task fetching and randomization
-export let tasks = []; // List of tasks fetched from server or predefined
+export let tasks = [];
 let currentTask = null;
 let question = "";
-export let answerSquares = [];    // 1 Correct and 1-3 wrong answers
-export let correctAnswerSquare;     // This will hold the current square for correct answer
-let correctAnswer = "";             // Text inside of the answer
-let wrongAnswer1 = "";              // Text inside of the answer
-let wrongAnswer2 = "";              // Text inside of the answer
+export let answerSquares = [];
+export let correctAnswerSquare;
 
-const AMOUNT_OBSTACLES = 8;                // Amount of obstacles for Level 3
-const MIN_DIST_BORDER = 2;              // Minimum distance from the border for obstacles
+let correctAnswer = "";
+let wrongAnswer1 = "";
+let wrongAnswer2 = "";
 
-let occupiedLanes = [];  // Array to store occupied lanes for placing answer squares
-
-import { mathTopic } from './mainTrafficMath.js';
+let occupiedLanes = []; // which lanes are used by falling squares
+import { mathTopic } from "./mainTrafficMath.js";
 
 export async function fetchTasks() {
     try {
-        const response = await fetch('http://localhost:3000/api/tasks');
+        const response = await fetch("http://localhost:3000/api/tasks");
         tasks = await response.json();
     } catch (error) {
-        console.error('Error fetching tasks:', error);
+        console.error("Error fetching tasks:", error);
     }
 }
 
-// Load random task
+// Load a random task
 export function loadRandomTask() {
     if (tasks.length === 0) {
         console.error("No tasks available.");
-        return;  // Don't proceed if no tasks are available
+        return;
     }
-    if (tasks.length > 0) {
-
-        // Filters all tasks by topic
-        const filteredTasks = tasks.filter(task => task.topic === mathTopic);
-
-        if (filteredTasks.length > 0) {
-            // Pick a random task out of filtered ones
-            const randomTask = filteredTasks[Math.floor(Math.random() * filteredTasks.length)];
-            currentTask = randomTask;
-
-            renderQuestion();
-            renderAnswers();
-        } else {
-            console.warn(`No tasks for "${mathTopic}" found.`);
-            currentTask = null; // Set currentTask to null, if no task is found
-        }
+    // Filter tasks by chosen mathTopic
+    const filteredTasks = tasks.filter((task) => task.topic === mathTopic);
+    if (filteredTasks.length > 0) {
+        // Random pick from filtered tasks
+        const randomTask =
+            filteredTasks[Math.floor(Math.random() * filteredTasks.length)];
+        currentTask = randomTask;
+        renderQuestion();
+        renderAnswers();
     } else {
-        console.error("No task available.");
+        console.warn(`No tasks found for topic: ${mathTopic}`);
+        currentTask = null;
     }
 }
 
-// Dynamically render the question at the top of the page
 function renderQuestion() {
-    const questionDiv = document.querySelector('.question'); // Chooses element containing class "question"
+    const questionDiv = document.querySelector(".question");
     if (questionDiv && currentTask) {
-        question = currentTask.question; // Save question in global variable "question"
-        questionDiv.innerHTML = '';      // Clear existing element of question
-
-        // Render question with KaTeX
+        question = currentTask.question;
+        questionDiv.innerHTML = "";
         katex.render(question, questionDiv, {
-            throwOnError: false, // Ignore errors to prevent system crash
+            throwOnError: false,
         });
     } else {
-        console.error('Question element not found or currentTask is undefined.');
+        console.error("Question element not found or currentTask is undefined.");
     }
 }
 
-// Dynamically render the answers 
 function renderAnswers() {
     correctAnswer = currentTask.correct_answer;
     wrongAnswer1 = currentTask.wrong_answer1;
     wrongAnswer2 = currentTask.wrong_answer2;
 }
 
+// Create squares for correct and wrong answers
 export function createAnswerSquares() {
     answerSquares = [];
     createCorrectAnswerSquare();
 
-    let maxTries = 10; // Max 10 tries to generate wrong answers
+    let maxTries = 10;
     let tries = 0;
 
     while (tries < maxTries) {
         createWrongAnswersSquareTraffic();
-
-        // Check if all answer squares are in different lanes
-        let laneSet = new Set(answerSquares.map(sq => sq.x));
+        // Ensure each answer is in a unique lane
+        let laneSet = new Set(answerSquares.map((sq) => sq.x));
         if (laneSet.size === answerSquares.length) {
             break;
         }
-
-        console.warn("Doppelte Lane erkannt! Neuer Versuch...");
-        answerSquares = [correctAnswerSquare]; // Keep correct answer, try again
+        console.warn("Duplicate lane found. Retrying...");
+        answerSquares = [correctAnswerSquare]; // Keep correct square, re-generate wrong squares
         tries++;
     }
 }
 
-// Initialize player's square (car)
+// Initialize player's squares (the car) in the middle lane
 export function createPlayerSquareArrayCar() {
+    // We set them to lanes[1] so it spawns exactly in the middle lane
     squarePlayerArrayCar = [
         new Square(
             lanes[1],
             canvasHeight - BORDER_MARGIN - 2 * BLOCK_SIZE,
             BLOCK_SIZE,
             "",
-            getColorByName('Orange'),
+            getColorByName("Orange"),
             "",
             false,
             false,
             null,
             "",
-            true // Segment for player
+            true
         ),
         new Square(
             lanes[1],
             canvasHeight - BORDER_MARGIN - BLOCK_SIZE,
             BLOCK_SIZE,
             "",
-            getColorByName('Orange'),
+            getColorByName("Orange"),
             "",
             false,
             false,
             null,
             "",
-            true // Segment for player
-        )
+            true
+        ),
     ];
 }
 
-// Create a new square for correct answer at a random position
 function createCorrectAnswerSquare() {
     const { x, y } = generateValidPositionTraffic();
 
-    // Create new square for correct answer
     correctAnswerSquare = new Square(
         x,
         y,
         BLOCK_SIZE,
-        correctAnswer,      // Text
-        "",                 // Color of square
-        getColorByName('Green'), // Color of text
-        true,               // True: Marking it as a correct answer
-        false,              // False: Marking it as a wrong answer
-        null,               // No image
-        ""                  // 🍓
+        correctAnswer,
+        "", // Square fill color
+        getColorByName("Green"), // Text color
+        true, // isCorrectAnswer
+        false // isWrongAnswer
     );
 
     answerSquares.push(correctAnswerSquare);
@@ -174,7 +154,6 @@ function createCorrectAnswerSquare() {
 
 function createWrongAnswersSquareTraffic() {
     let wrongAnswers = [];
-
     switch (currentStage) {
         case 1:
             wrongAnswers = [wrongAnswer1];
@@ -190,43 +169,40 @@ function createWrongAnswersSquareTraffic() {
     wrongAnswers.forEach((wrongAnswer) => {
         const { x, y } = generateValidPositionTraffic();
 
-        // Create new square for wrong answer
         const wrongAnswerSquare = new Square(
             x,
             y,
             BLOCK_SIZE,
-            wrongAnswer,    // Text
-            "",             // Color of square
-            getColorByName('Plum'), // Color of text
-            false,          // False: Marking it as a correct answer 
-            true,           // True: Marking it as a wrong answer
-            null,           // No image
-            ""              // 🍓
+            wrongAnswer,
+            "",
+            getColorByName("Plum"),
+            false, // isCorrectAnswer
+            true // isWrongAnswer
         );
 
-        // Add square of wrong answer to the squares array
         answerSquares.push(wrongAnswerSquare);
     });
 }
 
+/**
+ * Picks a lane not currently occupied and spawns the square at y=BORDER_MARGIN.
+ * If all lanes are taken, it resets occupiedLanes and tries again.
+ */
 function generateValidPositionTraffic() {
-    let availableLanes = lanes.filter(lane => !occupiedLanes.includes(lane));
-
+    let availableLanes = lanes.filter((lane) => !occupiedLanes.includes(lane));
     if (availableLanes.length === 0) {
         console.warn("No available lanes! Resetting occupied lanes...");
-        occupiedLanes = []; // Clear all occupied lanes
-        availableLanes = [...lanes]; // Fill available lanes with all lanes
+        occupiedLanes = [];
+        availableLanes = [...lanes];
     }
-
     if (availableLanes.length === 0) {
-        console.error("Fehler: Keine Lanes verfügbar!");
-        return { x: lanes[0], y: BORDER_MARGIN }; // Return first lane as fallback
+        console.error("No lanes available at all!");
+        return { x: lanes[0], y: BORDER_MARGIN };
     }
 
     const randomLaneIndex = Math.floor(Math.random() * availableLanes.length);
     const x = availableLanes[randomLaneIndex];
-
-    occupiedLanes.push(x); // Save occupied lane
+    occupiedLanes.push(x);
 
     return { x, y: BORDER_MARGIN };
 }
@@ -251,13 +227,13 @@ class Square {
         this.text = text;
         this.fillColorSq = fillColorSq;
         this.fillColorText = fillColorText;
-        this.isCorrectAnswer = isCorrectAnswer; // Flag to indicate if it's the correct answer
-        this.isWrongAnswer = isWrongAnswer; // Flag to indicate if it's a wrong answer
-        this.imageSrc = imageSrc;  // Optional: Path to an image
-        this.image = null;         // Holds the loaded image object if provided
+        this.isCorrectAnswer = isCorrectAnswer;
+        this.isWrongAnswer = isWrongAnswer;
+        this.imageSrc = imageSrc;
+        this.image = null;
         this.emoji = emoji;
-        this.player = false; // Indicates if this square is the player's square
-        this.isColliding = false;   // Flag for collision
+        this.player = player; // Is this square part of the player's car?
+        this.isColliding = false;
 
         if (this.imageSrc) {
             this.image = new Image();
@@ -268,30 +244,40 @@ class Square {
     drawRect(ctx) {
         const cornerRadius = 2;
 
+        // If there's no emoji, we draw a filled rectangle
         if (!this.emoji) {
-            // Set the color dynamically based on square type
+            // If it's the player's car
             if (this.player) {
-                if (squarePlayerArrayCar.indexOf(this) !== 0) {
-                    ctx.fillStyle = getColorByName('Orange');
-                }
+                // The top segment might share the same color,
+                // but if you want a different color for the second segment, do so here.
+                ctx.fillStyle = getColorByName("Orange");
             } else {
+                // For normal squares (answers, obstacles, etc.)
                 ctx.fillStyle = this.fillColorSq || "rgba(0, 0, 0, 0)";
             }
 
-            // Draw square with rounded corners
             ctx.beginPath();
-            ctx.roundRect(this.x + 1, this.y + 1, this.width - 2, this.width - 2, cornerRadius);
+            ctx.roundRect(
+                this.x + 1,
+                this.y + 1,
+                this.width - 2,
+                this.width - 2,
+                cornerRadius
+            );
             ctx.fill();
         }
 
         // Draw text or emoji
         ctx.fillStyle = this.fillColorText;
-        ctx.font = this.emoji ? `${this.width - 4}px Arial` : "30px 'ComputerPixel', monospace";
+        ctx.font = this.emoji
+            ? `${this.width - 4}px Arial`
+            : "30px 'ComputerPixel', monospace";
         ctx.textAlign = this.emoji ? "center" : "left";
         ctx.textBaseline = "middle";
+
         const textX = this.emoji ? this.x + this.width / 2 : this.x + 4;
         const textY = this.y + this.width / 2;
-        // Only draw the emoji, not the text (since text is handled by KaTeX)
+
         if (this.emoji) {
             ctx.fillText(this.emoji, textX, textY);
         }
